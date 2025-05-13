@@ -1,0 +1,10 @@
+{
+  "name": "@nextjs-expressjs-postgre-sql/frontend-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@nextjs-expressjs-postgre-sql/frontend"
+    ]
+  }
+}
