@@ -2,6 +2,6 @@ import { nodeShared } from '@nextjs-expressjs-postgre-sql/node-shared';
 
 export default function Index() {
   return (
-    <div>{nodeShared()}</div>
+    <div>{nodeShared()} sad</div>
   );
 }
