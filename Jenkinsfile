@@ -15,12 +15,6 @@ pipeline {
       }
     }
 
-    stage('Node Test') {
-      steps {
-        sh 'node -v && npm -v'
-      }
-    }
-
     stage('Build Nx Base Image') {
       steps {
         script {
