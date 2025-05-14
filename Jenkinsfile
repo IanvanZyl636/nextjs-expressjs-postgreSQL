@@ -2,44 +2,37 @@ pipeline {
   agent any
 
   environment {
-    REGISTRY = "localhost:5000"
+    REGISTRY = 'myregistry.local'
+    BASE_IMAGE = 'nx-builder-base'
+    NEXT_IMAGE = "${REGISTRY}/next-app:latest"
+    EXPRESS_IMAGE = "${REGISTRY}/express-app:latest"
   }
 
   stages {
     stage('Checkout') {
       steps {
-        git url: 'https://your-repo-url.git'
+        checkout scm
       }
     }
 
-    stage('Install Dependencies') {
-      steps {
-        sh 'yarn install --frozen-lockfile'
-      }
-    }
-
-    stage('Build Next.js') {
-      steps {
-        sh 'yarn nx build next-app'
-      }
-    }
-
-    stage('Build Express.js') {
-      steps {
-        sh 'yarn nx build express-app'
-      }
-    }
-
-    stage('Docker Build & Push') {
+    stage('Build Nx Base Image') {
       steps {
         script {
-          docker.build("next-app", "-f Dockerfile.next .").tag("${REGISTRY}/next-app:latest")
-          docker.build("express-app", "-f Dockerfile.express .").tag("${REGISTRY}/express-app:latest")
-
-          sh "docker push ${REGISTRY}/next-app:latest"
-          sh "docker push ${REGISTRY}/express-app:latest"
+          sh '''
+            docker build -f Dockerfile.builder-base -t $BASE_IMAGE .
+          '''
         }
       }
+    }
+
+  }
+
+  post {
+    failure {
+      echo 'Build failed!'
+    }
+    success {
+      echo 'All images built and pushed successfully.'
     }
   }
 }
