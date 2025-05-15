@@ -19,7 +19,7 @@
   ],
   "references": [
     {
-      "path": "../../libs/node-shared/tsconfig.lib.json"
+      "path": "../../libs/shared/tsconfig.lib.json"
     }
   ]
 }

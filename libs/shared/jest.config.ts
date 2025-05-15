@@ -10,7 +10,7 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-  displayName: '@nextjs-expressjs-postgre-sql/node-shared',
+  displayName: '@nextjs-expressjs-postgre-sql/shared',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

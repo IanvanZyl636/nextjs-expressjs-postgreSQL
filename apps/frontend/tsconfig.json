@@ -49,7 +49,7 @@
   ],
   "references": [
     {
-      "path": "../../libs/node-shared"
+      "path": "../../libs/shared"
     }
   ]
 }
