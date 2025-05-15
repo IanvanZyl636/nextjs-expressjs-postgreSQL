@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "docker:start": "docker-compose -f docker-compose.yml up -d --no-deps --build",
-    "docker:jenkins:start": "docker-compose -f docker-compose.jenkins.yml up -d --no-deps --build"
+    "docker:jenkins:start": "docker-compose -f docker-compose.jenkins.yml up -d --no-deps --build",
+    "docker:postgresql:start": "docker-compose -f docker-compose.postgresql.yml up -d --no-deps --build"
   },
   "private": true,
   "devDependencies": {
