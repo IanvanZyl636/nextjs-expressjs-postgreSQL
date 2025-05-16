@@ -5,7 +5,11 @@
   "scripts": {
     "docker:start": "docker-compose -f docker-compose.yml up -d --no-deps --build",
     "docker:jenkins:start": "docker-compose -f docker-compose.jenkins.yml up -d --no-deps --build",
-    "docker:postgresql:start": "docker-compose -f docker-compose.postgresql.yml up -d --no-deps --build"
+    "docker:postgresql:start": "docker-compose -f docker-compose.postgresql.yml up -d --no-deps --build",
+    "prisma:migrate": "npx prisma migrate dev --schema=apps/backend/src/integrations/prisma/schema/schema.prisma",
+    "prisma:reset": "npx prisma migrate reset --schema=apps/backend/src/integrations/prisma/schema/schema.prisma",
+    "prisma:deploy": "npx prisma migrate deploy --schema=apps/backend/src/integrations/prisma/schema/schema.prisma",
+    "prisma:seed": "npx prisma db seed --schema=apps/backend/src/integrations/prisma/schema/schema.prisma"
   },
   "private": true,
   "devDependencies": {

@@ -1,6 +1,8 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 const { join } = require('path');
 
+const isDevelopModeEnabled = !!(process.env['DEVELOPMODE']);
+
 module.exports = {
   output: {
     path: join(__dirname, 'dist'),
@@ -10,11 +12,12 @@ module.exports = {
       target: 'node',
       compiler: 'tsc',
       main: './src/main.ts',
-      tsConfig: './tsconfig.app.json',
+      tsConfig: isDevelopModeEnabled ? './tsconfig.dev.json' : './tsconfig.app.json',
       assets: ['./src/assets'],
-      optimization: false,
-      outputHashing: 'none',
       generatePackageJson: true,
+      sourceMap: isDevelopModeEnabled,
+      outputHashing: !isDevelopModeEnabled ? 'all' : 'none',
+      optimization: !isDevelopModeEnabled
     }),
   ],
 };
