@@ -19,22 +19,12 @@ export type LocationModel = runtime.Types.Result.DefaultSelection<Prisma.$Locati
 
 export type AggregateLocation = {
   _count: LocationCountAggregateOutputType | null
-  _avg: LocationAvgAggregateOutputType | null
-  _sum: LocationSumAggregateOutputType | null
   _min: LocationMinAggregateOutputType | null
   _max: LocationMaxAggregateOutputType | null
 }
 
-export type LocationAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type LocationSumAggregateOutputType = {
-  id: number | null
-}
-
 export type LocationMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   lat: string | null
   long: string | null
   locality: string | null
@@ -44,7 +34,7 @@ export type LocationMinAggregateOutputType = {
 }
 
 export type LocationMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   lat: string | null
   long: string | null
   locality: string | null
@@ -64,14 +54,6 @@ export type LocationCountAggregateOutputType = {
   _all: number
 }
 
-
-export type LocationAvgAggregateInputType = {
-  id?: true
-}
-
-export type LocationSumAggregateInputType = {
-  id?: true
-}
 
 export type LocationMinAggregateInputType = {
   id?: true
@@ -142,18 +124,6 @@ export type LocationAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: LocationAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: LocationSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: LocationMinAggregateInputType
@@ -184,14 +154,12 @@ export type LocationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: LocationCountAggregateInputType | true
-  _avg?: LocationAvgAggregateInputType
-  _sum?: LocationSumAggregateInputType
   _min?: LocationMinAggregateInputType
   _max?: LocationMaxAggregateInputType
 }
 
 export type LocationGroupByOutputType = {
-  id: number
+  id: string
   lat: string
   long: string
   locality: string
@@ -199,8 +167,6 @@ export type LocationGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: LocationCountAggregateOutputType | null
-  _avg: LocationAvgAggregateOutputType | null
-  _sum: LocationSumAggregateOutputType | null
   _min: LocationMinAggregateOutputType | null
   _max: LocationMaxAggregateOutputType | null
 }
@@ -224,7 +190,7 @@ export type LocationWhereInput = {
   AND?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
-  id?: Prisma.IntFilter<"Location"> | number
+  id?: Prisma.StringFilter<"Location"> | string
   lat?: Prisma.StringFilter<"Location"> | string
   long?: Prisma.StringFilter<"Location"> | string
   locality?: Prisma.StringFilter<"Location"> | string
@@ -246,7 +212,7 @@ export type LocationOrderByWithRelationInput = {
 }
 
 export type LocationWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   lat_long?: Prisma.LocationLatLongCompoundUniqueInput
   AND?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   OR?: Prisma.LocationWhereInput[]
@@ -269,17 +235,15 @@ export type LocationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LocationCountOrderByAggregateInput
-  _avg?: Prisma.LocationAvgOrderByAggregateInput
   _max?: Prisma.LocationMaxOrderByAggregateInput
   _min?: Prisma.LocationMinOrderByAggregateInput
-  _sum?: Prisma.LocationSumOrderByAggregateInput
 }
 
 export type LocationScalarWhereWithAggregatesInput = {
   AND?: Prisma.LocationScalarWhereWithAggregatesInput | Prisma.LocationScalarWhereWithAggregatesInput[]
   OR?: Prisma.LocationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LocationScalarWhereWithAggregatesInput | Prisma.LocationScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Location"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Location"> | string
   lat?: Prisma.StringWithAggregatesFilter<"Location"> | string
   long?: Prisma.StringWithAggregatesFilter<"Location"> | string
   locality?: Prisma.StringWithAggregatesFilter<"Location"> | string
@@ -289,6 +253,7 @@ export type LocationScalarWhereWithAggregatesInput = {
 }
 
 export type LocationCreateInput = {
+  id?: string
   lat: string
   long: string
   locality: string
@@ -299,7 +264,7 @@ export type LocationCreateInput = {
 }
 
 export type LocationUncheckedCreateInput = {
-  id?: number
+  id?: string
   lat: string
   long: string
   locality: string
@@ -310,6 +275,7 @@ export type LocationUncheckedCreateInput = {
 }
 
 export type LocationUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lat?: Prisma.StringFieldUpdateOperationsInput | string
   long?: Prisma.StringFieldUpdateOperationsInput | string
   locality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -320,7 +286,7 @@ export type LocationUpdateInput = {
 }
 
 export type LocationUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lat?: Prisma.StringFieldUpdateOperationsInput | string
   long?: Prisma.StringFieldUpdateOperationsInput | string
   locality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -331,7 +297,7 @@ export type LocationUncheckedUpdateInput = {
 }
 
 export type LocationCreateManyInput = {
-  id?: number
+  id?: string
   lat: string
   long: string
   locality: string
@@ -341,6 +307,7 @@ export type LocationCreateManyInput = {
 }
 
 export type LocationUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lat?: Prisma.StringFieldUpdateOperationsInput | string
   long?: Prisma.StringFieldUpdateOperationsInput | string
   locality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -350,7 +317,7 @@ export type LocationUpdateManyMutationInput = {
 }
 
 export type LocationUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lat?: Prisma.StringFieldUpdateOperationsInput | string
   long?: Prisma.StringFieldUpdateOperationsInput | string
   locality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -379,10 +346,6 @@ export type LocationCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type LocationAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-}
-
 export type LocationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lat?: Prisma.SortOrder
@@ -403,10 +366,6 @@ export type LocationMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type LocationSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-}
-
 export type LocationCreateNestedOneWithoutCircuitInput = {
   create?: Prisma.XOR<Prisma.LocationCreateWithoutCircuitInput, Prisma.LocationUncheckedCreateWithoutCircuitInput>
   connectOrCreate?: Prisma.LocationCreateOrConnectWithoutCircuitInput
@@ -422,6 +381,7 @@ export type LocationUpdateOneRequiredWithoutCircuitNestedInput = {
 }
 
 export type LocationCreateWithoutCircuitInput = {
+  id?: string
   lat: string
   long: string
   locality: string
@@ -431,7 +391,7 @@ export type LocationCreateWithoutCircuitInput = {
 }
 
 export type LocationUncheckedCreateWithoutCircuitInput = {
-  id?: number
+  id?: string
   lat: string
   long: string
   locality: string
@@ -457,6 +417,7 @@ export type LocationUpdateToOneWithWhereWithoutCircuitInput = {
 }
 
 export type LocationUpdateWithoutCircuitInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lat?: Prisma.StringFieldUpdateOperationsInput | string
   long?: Prisma.StringFieldUpdateOperationsInput | string
   locality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -466,7 +427,7 @@ export type LocationUpdateWithoutCircuitInput = {
 }
 
 export type LocationUncheckedUpdateWithoutCircuitInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lat?: Prisma.StringFieldUpdateOperationsInput | string
   long?: Prisma.StringFieldUpdateOperationsInput | string
   locality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -531,7 +492,7 @@ export type $LocationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     circuit: Prisma.$CircuitPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     lat: string
     long: string
     locality: string
@@ -962,7 +923,7 @@ export interface Prisma__LocationClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Location model
  */
 export interface LocationFieldRefs {
-  readonly id: Prisma.FieldRef<"Location", 'Int'>
+  readonly id: Prisma.FieldRef<"Location", 'String'>
   readonly lat: Prisma.FieldRef<"Location", 'String'>
   readonly long: Prisma.FieldRef<"Location", 'String'>
   readonly locality: Prisma.FieldRef<"Location", 'String'>

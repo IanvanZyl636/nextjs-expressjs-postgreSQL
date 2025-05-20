@@ -26,27 +26,27 @@ export type AggregateSeason = {
 }
 
 export type SeasonAvgAggregateOutputType = {
-  id: number | null
   year: number | null
 }
 
 export type SeasonSumAggregateOutputType = {
-  id: number | null
   year: number | null
 }
 
 export type SeasonMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   year: number | null
   championId: string | null
+  championConstructorId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type SeasonMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   year: number | null
   championId: string | null
+  championConstructorId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,6 +55,7 @@ export type SeasonCountAggregateOutputType = {
   id: number
   year: number
   championId: number
+  championConstructorId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,12 +63,10 @@ export type SeasonCountAggregateOutputType = {
 
 
 export type SeasonAvgAggregateInputType = {
-  id?: true
   year?: true
 }
 
 export type SeasonSumAggregateInputType = {
-  id?: true
   year?: true
 }
 
@@ -75,6 +74,7 @@ export type SeasonMinAggregateInputType = {
   id?: true
   year?: true
   championId?: true
+  championConstructorId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -83,6 +83,7 @@ export type SeasonMaxAggregateInputType = {
   id?: true
   year?: true
   championId?: true
+  championConstructorId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -91,6 +92,7 @@ export type SeasonCountAggregateInputType = {
   id?: true
   year?: true
   championId?: true
+  championConstructorId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -183,9 +185,10 @@ export type SeasonGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 export type SeasonGroupByOutputType = {
-  id: number
+  id: string
   year: number
   championId: string
+  championConstructorId: string
   createdAt: Date
   updatedAt: Date
   _count: SeasonCountAggregateOutputType | null
@@ -214,12 +217,14 @@ export type SeasonWhereInput = {
   AND?: Prisma.SeasonWhereInput | Prisma.SeasonWhereInput[]
   OR?: Prisma.SeasonWhereInput[]
   NOT?: Prisma.SeasonWhereInput | Prisma.SeasonWhereInput[]
-  id?: Prisma.IntFilter<"Season"> | number
+  id?: Prisma.StringFilter<"Season"> | string
   year?: Prisma.IntFilter<"Season"> | number
   championId?: Prisma.StringFilter<"Season"> | string
+  championConstructorId?: Prisma.StringFilter<"Season"> | string
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   champion?: Prisma.XOR<Prisma.DriverScalarRelationFilter, Prisma.DriverWhereInput>
+  championConstructor?: Prisma.XOR<Prisma.ConstructorScalarRelationFilter, Prisma.ConstructorWhereInput>
   races?: Prisma.RaceListRelationFilter
 }
 
@@ -227,22 +232,26 @@ export type SeasonOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   year?: Prisma.SortOrder
   championId?: Prisma.SortOrder
+  championConstructorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   champion?: Prisma.DriverOrderByWithRelationInput
+  championConstructor?: Prisma.ConstructorOrderByWithRelationInput
   races?: Prisma.RaceOrderByRelationAggregateInput
 }
 
 export type SeasonWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   year?: number
   AND?: Prisma.SeasonWhereInput | Prisma.SeasonWhereInput[]
   OR?: Prisma.SeasonWhereInput[]
   NOT?: Prisma.SeasonWhereInput | Prisma.SeasonWhereInput[]
   championId?: Prisma.StringFilter<"Season"> | string
+  championConstructorId?: Prisma.StringFilter<"Season"> | string
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   champion?: Prisma.XOR<Prisma.DriverScalarRelationFilter, Prisma.DriverWhereInput>
+  championConstructor?: Prisma.XOR<Prisma.ConstructorScalarRelationFilter, Prisma.ConstructorWhereInput>
   races?: Prisma.RaceListRelationFilter
 }, "id" | "year">
 
@@ -250,6 +259,7 @@ export type SeasonOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   year?: Prisma.SortOrder
   championId?: Prisma.SortOrder
+  championConstructorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SeasonCountOrderByAggregateInput
@@ -263,65 +273,75 @@ export type SeasonScalarWhereWithAggregatesInput = {
   AND?: Prisma.SeasonScalarWhereWithAggregatesInput | Prisma.SeasonScalarWhereWithAggregatesInput[]
   OR?: Prisma.SeasonScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SeasonScalarWhereWithAggregatesInput | Prisma.SeasonScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Season"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Season"> | string
   year?: Prisma.IntWithAggregatesFilter<"Season"> | number
   championId?: Prisma.StringWithAggregatesFilter<"Season"> | string
+  championConstructorId?: Prisma.StringWithAggregatesFilter<"Season"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Season"> | Date | string
 }
 
 export type SeasonCreateInput = {
+  id?: string
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
   champion: Prisma.DriverCreateNestedOneWithoutChampionshipsInput
+  championConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverSeasonWinnerInput
   races?: Prisma.RaceCreateNestedManyWithoutSeasonInput
 }
 
 export type SeasonUncheckedCreateInput = {
-  id?: number
+  id?: string
   year: number
   championId: string
+  championConstructorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   races?: Prisma.RaceUncheckedCreateNestedManyWithoutSeasonInput
 }
 
 export type SeasonUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   champion?: Prisma.DriverUpdateOneRequiredWithoutChampionshipsNestedInput
+  championConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverSeasonWinnerNestedInput
   races?: Prisma.RaceUpdateManyWithoutSeasonNestedInput
 }
 
 export type SeasonUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   championId?: Prisma.StringFieldUpdateOperationsInput | string
+  championConstructorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   races?: Prisma.RaceUncheckedUpdateManyWithoutSeasonNestedInput
 }
 
 export type SeasonCreateManyInput = {
-  id?: number
+  id?: string
   year: number
   championId: string
+  championConstructorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SeasonUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SeasonUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   championId?: Prisma.StringFieldUpdateOperationsInput | string
+  championConstructorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -330,12 +350,12 @@ export type SeasonCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   year?: Prisma.SortOrder
   championId?: Prisma.SortOrder
+  championConstructorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SeasonAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   year?: Prisma.SortOrder
 }
 
@@ -343,6 +363,7 @@ export type SeasonMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   year?: Prisma.SortOrder
   championId?: Prisma.SortOrder
+  championConstructorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -351,12 +372,12 @@ export type SeasonMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   year?: Prisma.SortOrder
   championId?: Prisma.SortOrder
+  championConstructorId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SeasonSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   year?: Prisma.SortOrder
 }
 
@@ -375,6 +396,10 @@ export type SeasonOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -385,10 +410,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type StringFieldUpdateOperationsInput = {
-  set?: string
 }
 
 export type SeasonCreateNestedOneWithoutRacesInput = {
@@ -403,6 +424,48 @@ export type SeasonUpdateOneRequiredWithoutRacesNestedInput = {
   upsert?: Prisma.SeasonUpsertWithoutRacesInput
   connect?: Prisma.SeasonWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SeasonUpdateToOneWithWhereWithoutRacesInput, Prisma.SeasonUpdateWithoutRacesInput>, Prisma.SeasonUncheckedUpdateWithoutRacesInput>
+}
+
+export type SeasonCreateNestedManyWithoutChampionConstructorInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutChampionConstructorInput, Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput> | Prisma.SeasonCreateWithoutChampionConstructorInput[] | Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput | Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput[]
+  createMany?: Prisma.SeasonCreateManyChampionConstructorInputEnvelope
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+}
+
+export type SeasonUncheckedCreateNestedManyWithoutChampionConstructorInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutChampionConstructorInput, Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput> | Prisma.SeasonCreateWithoutChampionConstructorInput[] | Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput | Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput[]
+  createMany?: Prisma.SeasonCreateManyChampionConstructorInputEnvelope
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+}
+
+export type SeasonUpdateManyWithoutChampionConstructorNestedInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutChampionConstructorInput, Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput> | Prisma.SeasonCreateWithoutChampionConstructorInput[] | Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput | Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput[]
+  upsert?: Prisma.SeasonUpsertWithWhereUniqueWithoutChampionConstructorInput | Prisma.SeasonUpsertWithWhereUniqueWithoutChampionConstructorInput[]
+  createMany?: Prisma.SeasonCreateManyChampionConstructorInputEnvelope
+  set?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  disconnect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  delete?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  update?: Prisma.SeasonUpdateWithWhereUniqueWithoutChampionConstructorInput | Prisma.SeasonUpdateWithWhereUniqueWithoutChampionConstructorInput[]
+  updateMany?: Prisma.SeasonUpdateManyWithWhereWithoutChampionConstructorInput | Prisma.SeasonUpdateManyWithWhereWithoutChampionConstructorInput[]
+  deleteMany?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+}
+
+export type SeasonUncheckedUpdateManyWithoutChampionConstructorNestedInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutChampionConstructorInput, Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput> | Prisma.SeasonCreateWithoutChampionConstructorInput[] | Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput | Prisma.SeasonCreateOrConnectWithoutChampionConstructorInput[]
+  upsert?: Prisma.SeasonUpsertWithWhereUniqueWithoutChampionConstructorInput | Prisma.SeasonUpsertWithWhereUniqueWithoutChampionConstructorInput[]
+  createMany?: Prisma.SeasonCreateManyChampionConstructorInputEnvelope
+  set?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  disconnect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  delete?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  update?: Prisma.SeasonUpdateWithWhereUniqueWithoutChampionConstructorInput | Prisma.SeasonUpdateWithWhereUniqueWithoutChampionConstructorInput[]
+  updateMany?: Prisma.SeasonUpdateManyWithWhereWithoutChampionConstructorInput | Prisma.SeasonUpdateManyWithWhereWithoutChampionConstructorInput[]
+  deleteMany?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
 }
 
 export type SeasonCreateNestedManyWithoutChampionInput = {
@@ -448,16 +511,19 @@ export type SeasonUncheckedUpdateManyWithoutChampionNestedInput = {
 }
 
 export type SeasonCreateWithoutRacesInput = {
+  id?: string
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
   champion: Prisma.DriverCreateNestedOneWithoutChampionshipsInput
+  championConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverSeasonWinnerInput
 }
 
 export type SeasonUncheckedCreateWithoutRacesInput = {
-  id?: number
+  id?: string
   year: number
   championId: string
+  championConstructorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -479,30 +545,92 @@ export type SeasonUpdateToOneWithWhereWithoutRacesInput = {
 }
 
 export type SeasonUpdateWithoutRacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   champion?: Prisma.DriverUpdateOneRequiredWithoutChampionshipsNestedInput
+  championConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverSeasonWinnerNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutRacesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   championId?: Prisma.StringFieldUpdateOperationsInput | string
+  championConstructorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type SeasonCreateWithoutChampionInput = {
+export type SeasonCreateWithoutChampionConstructorInput = {
+  id?: string
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  champion: Prisma.DriverCreateNestedOneWithoutChampionshipsInput
+  races?: Prisma.RaceCreateNestedManyWithoutSeasonInput
+}
+
+export type SeasonUncheckedCreateWithoutChampionConstructorInput = {
+  id?: string
+  year: number
+  championId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  races?: Prisma.RaceUncheckedCreateNestedManyWithoutSeasonInput
+}
+
+export type SeasonCreateOrConnectWithoutChampionConstructorInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.SeasonCreateWithoutChampionConstructorInput, Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput>
+}
+
+export type SeasonCreateManyChampionConstructorInputEnvelope = {
+  data: Prisma.SeasonCreateManyChampionConstructorInput | Prisma.SeasonCreateManyChampionConstructorInput[]
+  skipDuplicates?: boolean
+}
+
+export type SeasonUpsertWithWhereUniqueWithoutChampionConstructorInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  update: Prisma.XOR<Prisma.SeasonUpdateWithoutChampionConstructorInput, Prisma.SeasonUncheckedUpdateWithoutChampionConstructorInput>
+  create: Prisma.XOR<Prisma.SeasonCreateWithoutChampionConstructorInput, Prisma.SeasonUncheckedCreateWithoutChampionConstructorInput>
+}
+
+export type SeasonUpdateWithWhereUniqueWithoutChampionConstructorInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  data: Prisma.XOR<Prisma.SeasonUpdateWithoutChampionConstructorInput, Prisma.SeasonUncheckedUpdateWithoutChampionConstructorInput>
+}
+
+export type SeasonUpdateManyWithWhereWithoutChampionConstructorInput = {
+  where: Prisma.SeasonScalarWhereInput
+  data: Prisma.XOR<Prisma.SeasonUpdateManyMutationInput, Prisma.SeasonUncheckedUpdateManyWithoutChampionConstructorInput>
+}
+
+export type SeasonScalarWhereInput = {
+  AND?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+  OR?: Prisma.SeasonScalarWhereInput[]
+  NOT?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+  id?: Prisma.StringFilter<"Season"> | string
+  year?: Prisma.IntFilter<"Season"> | number
+  championId?: Prisma.StringFilter<"Season"> | string
+  championConstructorId?: Prisma.StringFilter<"Season"> | string
+  createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
+}
+
+export type SeasonCreateWithoutChampionInput = {
+  id?: string
+  year: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  championConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverSeasonWinnerInput
   races?: Prisma.RaceCreateNestedManyWithoutSeasonInput
 }
 
 export type SeasonUncheckedCreateWithoutChampionInput = {
-  id?: number
+  id?: string
   year: number
+  championConstructorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   races?: Prisma.RaceUncheckedCreateNestedManyWithoutSeasonInput
@@ -534,42 +662,70 @@ export type SeasonUpdateManyWithWhereWithoutChampionInput = {
   data: Prisma.XOR<Prisma.SeasonUpdateManyMutationInput, Prisma.SeasonUncheckedUpdateManyWithoutChampionInput>
 }
 
-export type SeasonScalarWhereInput = {
-  AND?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
-  OR?: Prisma.SeasonScalarWhereInput[]
-  NOT?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
-  id?: Prisma.IntFilter<"Season"> | number
-  year?: Prisma.IntFilter<"Season"> | number
-  championId?: Prisma.StringFilter<"Season"> | string
-  createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
+export type SeasonCreateManyChampionConstructorInput = {
+  id?: string
+  year: number
+  championId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SeasonUpdateWithoutChampionConstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  champion?: Prisma.DriverUpdateOneRequiredWithoutChampionshipsNestedInput
+  races?: Prisma.RaceUpdateManyWithoutSeasonNestedInput
+}
+
+export type SeasonUncheckedUpdateWithoutChampionConstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  championId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  races?: Prisma.RaceUncheckedUpdateManyWithoutSeasonNestedInput
+}
+
+export type SeasonUncheckedUpdateManyWithoutChampionConstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  championId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SeasonCreateManyChampionInput = {
-  id?: number
+  id?: string
   year: number
+  championConstructorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SeasonUpdateWithoutChampionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  championConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverSeasonWinnerNestedInput
   races?: Prisma.RaceUpdateManyWithoutSeasonNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutChampionInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  championConstructorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   races?: Prisma.RaceUncheckedUpdateManyWithoutSeasonNestedInput
 }
 
 export type SeasonUncheckedUpdateManyWithoutChampionInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  championConstructorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -609,9 +765,11 @@ export type SeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   year?: boolean
   championId?: boolean
+  championConstructorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   champion?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  championConstructor?: boolean | Prisma.ConstructorDefaultArgs<ExtArgs>
   races?: boolean | Prisma.Season$racesArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
@@ -620,51 +778,61 @@ export type SeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   year?: boolean
   championId?: boolean
+  championConstructorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   champion?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  championConstructor?: boolean | Prisma.ConstructorDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
 export type SeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   year?: boolean
   championId?: boolean
+  championConstructorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   champion?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  championConstructor?: boolean | Prisma.ConstructorDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
 export type SeasonSelectScalar = {
   id?: boolean
   year?: boolean
   championId?: boolean
+  championConstructorId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "championId" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
+export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "championId" | "championConstructorId" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
 export type SeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   champion?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  championConstructor?: boolean | Prisma.ConstructorDefaultArgs<ExtArgs>
   races?: boolean | Prisma.Season$racesArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SeasonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   champion?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  championConstructor?: boolean | Prisma.ConstructorDefaultArgs<ExtArgs>
 }
 export type SeasonIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   champion?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  championConstructor?: boolean | Prisma.ConstructorDefaultArgs<ExtArgs>
 }
 
 export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Season"
   objects: {
     champion: Prisma.$DriverPayload<ExtArgs>
+    championConstructor: Prisma.$ConstructorPayload<ExtArgs>
     races: Prisma.$RacePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     year: number
     championId: string
+    championConstructorId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["season"]>
@@ -1062,6 +1230,7 @@ readonly fields: SeasonFieldRefs;
 export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   champion<T extends Prisma.DriverDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DriverDefaultArgs<ExtArgs>>): Prisma.Prisma__DriverClient<runtime.Types.Result.GetResult<Prisma.$DriverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  championConstructor<T extends Prisma.ConstructorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ConstructorDefaultArgs<ExtArgs>>): Prisma.Prisma__ConstructorClient<runtime.Types.Result.GetResult<Prisma.$ConstructorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   races<T extends Prisma.Season$racesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$racesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1092,9 +1261,10 @@ export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends runtime.T
  * Fields of the Season model
  */
 export interface SeasonFieldRefs {
-  readonly id: Prisma.FieldRef<"Season", 'Int'>
+  readonly id: Prisma.FieldRef<"Season", 'String'>
   readonly year: Prisma.FieldRef<"Season", 'Int'>
   readonly championId: Prisma.FieldRef<"Season", 'String'>
+  readonly championConstructorId: Prisma.FieldRef<"Season", 'String'>
   readonly createdAt: Prisma.FieldRef<"Season", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Season", 'DateTime'>
 }

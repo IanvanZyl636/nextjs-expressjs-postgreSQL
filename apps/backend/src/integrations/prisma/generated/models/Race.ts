@@ -26,24 +26,20 @@ export type AggregateRace = {
 }
 
 export type RaceAvgAggregateOutputType = {
-  id: number | null
-  seasonId: number | null
   round: number | null
   points: number | null
   laps: number | null
 }
 
 export type RaceSumAggregateOutputType = {
-  id: number | null
-  seasonId: number | null
   round: number | null
   points: number | null
   laps: number | null
 }
 
 export type RaceMinAggregateOutputType = {
-  id: number | null
-  seasonId: number | null
+  id: string | null
+  seasonId: string | null
   name: string | null
   round: number | null
   startedAt: Date | null
@@ -57,8 +53,8 @@ export type RaceMinAggregateOutputType = {
 }
 
 export type RaceMaxAggregateOutputType = {
-  id: number | null
-  seasonId: number | null
+  id: string | null
+  seasonId: string | null
   name: string | null
   round: number | null
   startedAt: Date | null
@@ -89,16 +85,12 @@ export type RaceCountAggregateOutputType = {
 
 
 export type RaceAvgAggregateInputType = {
-  id?: true
-  seasonId?: true
   round?: true
   points?: true
   laps?: true
 }
 
 export type RaceSumAggregateInputType = {
-  id?: true
-  seasonId?: true
   round?: true
   points?: true
   laps?: true
@@ -237,8 +229,8 @@ export type RaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 export type RaceGroupByOutputType = {
-  id: number
-  seasonId: number
+  id: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date
@@ -275,8 +267,8 @@ export type RaceWhereInput = {
   AND?: Prisma.RaceWhereInput | Prisma.RaceWhereInput[]
   OR?: Prisma.RaceWhereInput[]
   NOT?: Prisma.RaceWhereInput | Prisma.RaceWhereInput[]
-  id?: Prisma.IntFilter<"Race"> | number
-  seasonId?: Prisma.IntFilter<"Race"> | number
+  id?: Prisma.StringFilter<"Race"> | string
+  seasonId?: Prisma.StringFilter<"Race"> | string
   name?: Prisma.StringFilter<"Race"> | string
   round?: Prisma.IntFilter<"Race"> | number
   startedAt?: Prisma.DateTimeFilter<"Race"> | Date | string
@@ -313,12 +305,12 @@ export type RaceOrderByWithRelationInput = {
 }
 
 export type RaceWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   seasonId_round?: Prisma.RaceSeasonIdRoundCompoundUniqueInput
   AND?: Prisma.RaceWhereInput | Prisma.RaceWhereInput[]
   OR?: Prisma.RaceWhereInput[]
   NOT?: Prisma.RaceWhereInput | Prisma.RaceWhereInput[]
-  seasonId?: Prisma.IntFilter<"Race"> | number
+  seasonId?: Prisma.StringFilter<"Race"> | string
   name?: Prisma.StringFilter<"Race"> | string
   round?: Prisma.IntFilter<"Race"> | number
   startedAt?: Prisma.DateTimeFilter<"Race"> | Date | string
@@ -359,8 +351,8 @@ export type RaceScalarWhereWithAggregatesInput = {
   AND?: Prisma.RaceScalarWhereWithAggregatesInput | Prisma.RaceScalarWhereWithAggregatesInput[]
   OR?: Prisma.RaceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RaceScalarWhereWithAggregatesInput | Prisma.RaceScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Race"> | number
-  seasonId?: Prisma.IntWithAggregatesFilter<"Race"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Race"> | string
+  seasonId?: Prisma.StringWithAggregatesFilter<"Race"> | string
   name?: Prisma.StringWithAggregatesFilter<"Race"> | string
   round?: Prisma.IntWithAggregatesFilter<"Race"> | number
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"Race"> | Date | string
@@ -374,6 +366,7 @@ export type RaceScalarWhereWithAggregatesInput = {
 }
 
 export type RaceCreateInput = {
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -383,13 +376,13 @@ export type RaceCreateInput = {
   updatedAt?: Date | string
   circuit: Prisma.CircuitCreateNestedOneWithoutRacesInput
   winner: Prisma.DriverCreateNestedOneWithoutRacesWonInput
-  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutRaceWinnerConstructorsInput
+  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverRaceWinnerInput
   season: Prisma.SeasonCreateNestedOneWithoutRacesInput
 }
 
 export type RaceUncheckedCreateInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -403,6 +396,7 @@ export type RaceUncheckedCreateInput = {
 }
 
 export type RaceUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -412,13 +406,13 @@ export type RaceUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   circuit?: Prisma.CircuitUpdateOneRequiredWithoutRacesNestedInput
   winner?: Prisma.DriverUpdateOneRequiredWithoutRacesWonNestedInput
-  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutRaceWinnerConstructorsNestedInput
+  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverRaceWinnerNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutRacesNestedInput
 }
 
 export type RaceUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,8 +426,8 @@ export type RaceUncheckedUpdateInput = {
 }
 
 export type RaceCreateManyInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -447,6 +441,7 @@ export type RaceCreateManyInput = {
 }
 
 export type RaceUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -457,8 +452,8 @@ export type RaceUpdateManyMutationInput = {
 }
 
 export type RaceUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,7 +477,7 @@ export type RaceOrderByRelationAggregateInput = {
 }
 
 export type RaceSeasonIdRoundCompoundUniqueInput = {
-  seasonId: number
+  seasonId: string
   round: number
 }
 
@@ -502,8 +497,6 @@ export type RaceCountOrderByAggregateInput = {
 }
 
 export type RaceAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  seasonId?: Prisma.SortOrder
   round?: Prisma.SortOrder
   points?: Prisma.SortOrder
   laps?: Prisma.SortOrder
@@ -540,8 +533,6 @@ export type RaceMinOrderByAggregateInput = {
 }
 
 export type RaceSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  seasonId?: Prisma.SortOrder
   round?: Prisma.SortOrder
   points?: Prisma.SortOrder
   laps?: Prisma.SortOrder
@@ -716,6 +707,7 @@ export type RaceUncheckedUpdateManyWithoutWinnerNestedInput = {
 }
 
 export type RaceCreateWithoutSeasonInput = {
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -725,11 +717,11 @@ export type RaceCreateWithoutSeasonInput = {
   updatedAt?: Date | string
   circuit: Prisma.CircuitCreateNestedOneWithoutRacesInput
   winner: Prisma.DriverCreateNestedOneWithoutRacesWonInput
-  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutRaceWinnerConstructorsInput
+  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverRaceWinnerInput
 }
 
 export type RaceUncheckedCreateWithoutSeasonInput = {
-  id?: number
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -772,8 +764,8 @@ export type RaceScalarWhereInput = {
   AND?: Prisma.RaceScalarWhereInput | Prisma.RaceScalarWhereInput[]
   OR?: Prisma.RaceScalarWhereInput[]
   NOT?: Prisma.RaceScalarWhereInput | Prisma.RaceScalarWhereInput[]
-  id?: Prisma.IntFilter<"Race"> | number
-  seasonId?: Prisma.IntFilter<"Race"> | number
+  id?: Prisma.StringFilter<"Race"> | string
+  seasonId?: Prisma.StringFilter<"Race"> | string
   name?: Prisma.StringFilter<"Race"> | string
   round?: Prisma.IntFilter<"Race"> | number
   startedAt?: Prisma.DateTimeFilter<"Race"> | Date | string
@@ -787,6 +779,7 @@ export type RaceScalarWhereInput = {
 }
 
 export type RaceCreateWithoutCircuitInput = {
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -795,13 +788,13 @@ export type RaceCreateWithoutCircuitInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   winner: Prisma.DriverCreateNestedOneWithoutRacesWonInput
-  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutRaceWinnerConstructorsInput
+  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverRaceWinnerInput
   season: Prisma.SeasonCreateNestedOneWithoutRacesInput
 }
 
 export type RaceUncheckedCreateWithoutCircuitInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -840,6 +833,7 @@ export type RaceUpdateManyWithWhereWithoutCircuitInput = {
 }
 
 export type RaceCreateWithoutWinnerConstructorInput = {
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -853,8 +847,8 @@ export type RaceCreateWithoutWinnerConstructorInput = {
 }
 
 export type RaceUncheckedCreateWithoutWinnerConstructorInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -893,6 +887,7 @@ export type RaceUpdateManyWithWhereWithoutWinnerConstructorInput = {
 }
 
 export type RaceCreateWithoutWinnerInput = {
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -901,13 +896,13 @@ export type RaceCreateWithoutWinnerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   circuit: Prisma.CircuitCreateNestedOneWithoutRacesInput
-  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutRaceWinnerConstructorsInput
+  winnerConstructor: Prisma.ConstructorCreateNestedOneWithoutDriverRaceWinnerInput
   season: Prisma.SeasonCreateNestedOneWithoutRacesInput
 }
 
 export type RaceUncheckedCreateWithoutWinnerInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -946,7 +941,7 @@ export type RaceUpdateManyWithWhereWithoutWinnerInput = {
 }
 
 export type RaceCreateManySeasonInput = {
-  id?: number
+  id?: string
   name: string
   round: number
   startedAt: Date | string
@@ -960,6 +955,7 @@ export type RaceCreateManySeasonInput = {
 }
 
 export type RaceUpdateWithoutSeasonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -969,11 +965,11 @@ export type RaceUpdateWithoutSeasonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   circuit?: Prisma.CircuitUpdateOneRequiredWithoutRacesNestedInput
   winner?: Prisma.DriverUpdateOneRequiredWithoutRacesWonNestedInput
-  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutRaceWinnerConstructorsNestedInput
+  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverRaceWinnerNestedInput
 }
 
 export type RaceUncheckedUpdateWithoutSeasonInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -987,7 +983,7 @@ export type RaceUncheckedUpdateWithoutSeasonInput = {
 }
 
 export type RaceUncheckedUpdateManyWithoutSeasonInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1001,8 +997,8 @@ export type RaceUncheckedUpdateManyWithoutSeasonInput = {
 }
 
 export type RaceCreateManyCircuitInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -1015,6 +1011,7 @@ export type RaceCreateManyCircuitInput = {
 }
 
 export type RaceUpdateWithoutCircuitInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1023,13 +1020,13 @@ export type RaceUpdateWithoutCircuitInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   winner?: Prisma.DriverUpdateOneRequiredWithoutRacesWonNestedInput
-  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutRaceWinnerConstructorsNestedInput
+  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverRaceWinnerNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutRacesNestedInput
 }
 
 export type RaceUncheckedUpdateWithoutCircuitInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1042,8 +1039,8 @@ export type RaceUncheckedUpdateWithoutCircuitInput = {
 }
 
 export type RaceUncheckedUpdateManyWithoutCircuitInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1056,8 +1053,8 @@ export type RaceUncheckedUpdateManyWithoutCircuitInput = {
 }
 
 export type RaceCreateManyWinnerConstructorInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -1070,6 +1067,7 @@ export type RaceCreateManyWinnerConstructorInput = {
 }
 
 export type RaceUpdateWithoutWinnerConstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1083,8 +1081,8 @@ export type RaceUpdateWithoutWinnerConstructorInput = {
 }
 
 export type RaceUncheckedUpdateWithoutWinnerConstructorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1097,8 +1095,8 @@ export type RaceUncheckedUpdateWithoutWinnerConstructorInput = {
 }
 
 export type RaceUncheckedUpdateManyWithoutWinnerConstructorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1111,8 +1109,8 @@ export type RaceUncheckedUpdateManyWithoutWinnerConstructorInput = {
 }
 
 export type RaceCreateManyWinnerInput = {
-  id?: number
-  seasonId: number
+  id?: string
+  seasonId: string
   name: string
   round: number
   startedAt: Date | string
@@ -1125,6 +1123,7 @@ export type RaceCreateManyWinnerInput = {
 }
 
 export type RaceUpdateWithoutWinnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1133,13 +1132,13 @@ export type RaceUpdateWithoutWinnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   circuit?: Prisma.CircuitUpdateOneRequiredWithoutRacesNestedInput
-  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutRaceWinnerConstructorsNestedInput
+  winnerConstructor?: Prisma.ConstructorUpdateOneRequiredWithoutDriverRaceWinnerNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutRacesNestedInput
 }
 
 export type RaceUncheckedUpdateWithoutWinnerInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1152,8 +1151,8 @@ export type RaceUncheckedUpdateWithoutWinnerInput = {
 }
 
 export type RaceUncheckedUpdateManyWithoutWinnerInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   round?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1268,8 +1267,8 @@ export type $RacePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     season: Prisma.$SeasonPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    seasonId: number
+    id: string
+    seasonId: string
     name: string
     round: number
     startedAt: Date
@@ -1707,8 +1706,8 @@ export interface Prisma__RaceClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Race model
  */
 export interface RaceFieldRefs {
-  readonly id: Prisma.FieldRef<"Race", 'Int'>
-  readonly seasonId: Prisma.FieldRef<"Race", 'Int'>
+  readonly id: Prisma.FieldRef<"Race", 'String'>
+  readonly seasonId: Prisma.FieldRef<"Race", 'String'>
   readonly name: Prisma.FieldRef<"Race", 'String'>
   readonly round: Prisma.FieldRef<"Race", 'Int'>
   readonly startedAt: Prisma.FieldRef<"Race", 'DateTime'>

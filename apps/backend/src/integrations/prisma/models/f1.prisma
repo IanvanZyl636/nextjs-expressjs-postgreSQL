@@ -1,16 +1,18 @@
 model Season {
-  id         Int      @id @default(autoincrement())
-  year       Int      @unique
-  championId String
-  champion   Driver   @relation("ChampionDriver", fields: [championId], references: [driverId])
-  races      Race[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                    String      @id @default(uuid())
+  year                  Int         @unique
+  championId            String
+  champion              Driver      @relation("ChampionDriver", fields: [championId], references: [id])
+  championConstructorId String
+  championConstructor   Constructor @relation("ChampionConstructor", fields: [championConstructorId], references: [id])
+  races                 Race[]
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
 }
 
 model Race {
-  id                  Int      @id @default(autoincrement())
-  seasonId            Int
+  id                  String   @id @default(uuid())
+  seasonId            String
   name                String
   round               Int
   startedAt           DateTime
@@ -20,9 +22,9 @@ model Race {
   winnerId            String
   winnerConstructorId String
 
-  circuit           Circuit     @relation(fields: [circuitId], references: [circuitId])
-  winner            Driver      @relation("RaceWinner", fields: [winnerId], references: [driverId])
-  winnerConstructor Constructor @relation("RaceWinnerConstructor", fields: [winnerConstructorId], references: [constructorId])
+  circuit           Circuit     @relation(fields: [circuitId], references: [id])
+  winner            Driver      @relation("RaceWinner", fields: [winnerId], references: [id])
+  winnerConstructor Constructor @relation("WinnerConstructor", fields: [winnerConstructorId], references: [id])
   season            Season      @relation(fields: [seasonId], references: [id])
 
   createdAt DateTime @default(now())
@@ -32,9 +34,10 @@ model Race {
 }
 
 model Circuit {
-  circuitId   String @id
+  id          String @id @default(uuid())
+  circuitId   String @unique
   circuitName String
-  locationId  Int    @unique
+  locationId  String @unique
 
   location Location @relation(fields: [locationId], references: [id])
   races    Race[]
@@ -44,7 +47,7 @@ model Circuit {
 }
 
 model Location {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(uuid())
   lat      String
   long     String
   locality String
@@ -59,18 +62,21 @@ model Location {
 }
 
 model Constructor {
-  constructorId String @id
+  id            String @id @default(uuid())
+  constructorId String @unique
   name          String @unique
   nationality   String
 
-  raceWinnerConstructors Race[] @relation("RaceWinnerConstructor")
+  driverRaceWinner   Race[]   @relation("WinnerConstructor")
+  driverSeasonWinner Season[] @relation("ChampionConstructor")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Driver {
-  driverId    String @id
+  id          String @id @default(uuid())
+  driverId    String @unique
   fullName    String
   code        String
   nationality String

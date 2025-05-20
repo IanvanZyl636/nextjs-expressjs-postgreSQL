@@ -24,6 +24,7 @@ export type AggregateConstructor = {
 }
 
 export type ConstructorMinAggregateOutputType = {
+  id: string | null
   constructorId: string | null
   name: string | null
   nationality: string | null
@@ -32,6 +33,7 @@ export type ConstructorMinAggregateOutputType = {
 }
 
 export type ConstructorMaxAggregateOutputType = {
+  id: string | null
   constructorId: string | null
   name: string | null
   nationality: string | null
@@ -40,6 +42,7 @@ export type ConstructorMaxAggregateOutputType = {
 }
 
 export type ConstructorCountAggregateOutputType = {
+  id: number
   constructorId: number
   name: number
   nationality: number
@@ -50,6 +53,7 @@ export type ConstructorCountAggregateOutputType = {
 
 
 export type ConstructorMinAggregateInputType = {
+  id?: true
   constructorId?: true
   name?: true
   nationality?: true
@@ -58,6 +62,7 @@ export type ConstructorMinAggregateInputType = {
 }
 
 export type ConstructorMaxAggregateInputType = {
+  id?: true
   constructorId?: true
   name?: true
   nationality?: true
@@ -66,6 +71,7 @@ export type ConstructorMaxAggregateInputType = {
 }
 
 export type ConstructorCountAggregateInputType = {
+  id?: true
   constructorId?: true
   name?: true
   nationality?: true
@@ -147,6 +153,7 @@ export type ConstructorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type ConstructorGroupByOutputType = {
+  id: string
   constructorId: string
   name: string
   nationality: string
@@ -176,24 +183,29 @@ export type ConstructorWhereInput = {
   AND?: Prisma.ConstructorWhereInput | Prisma.ConstructorWhereInput[]
   OR?: Prisma.ConstructorWhereInput[]
   NOT?: Prisma.ConstructorWhereInput | Prisma.ConstructorWhereInput[]
+  id?: Prisma.StringFilter<"Constructor"> | string
   constructorId?: Prisma.StringFilter<"Constructor"> | string
   name?: Prisma.StringFilter<"Constructor"> | string
   nationality?: Prisma.StringFilter<"Constructor"> | string
   createdAt?: Prisma.DateTimeFilter<"Constructor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Constructor"> | Date | string
-  raceWinnerConstructors?: Prisma.RaceListRelationFilter
+  driverRaceWinner?: Prisma.RaceListRelationFilter
+  driverSeasonWinner?: Prisma.SeasonListRelationFilter
 }
 
 export type ConstructorOrderByWithRelationInput = {
+  id?: Prisma.SortOrder
   constructorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  raceWinnerConstructors?: Prisma.RaceOrderByRelationAggregateInput
+  driverRaceWinner?: Prisma.RaceOrderByRelationAggregateInput
+  driverSeasonWinner?: Prisma.SeasonOrderByRelationAggregateInput
 }
 
 export type ConstructorWhereUniqueInput = Prisma.AtLeast<{
+  id?: string
   constructorId?: string
   name?: string
   AND?: Prisma.ConstructorWhereInput | Prisma.ConstructorWhereInput[]
@@ -202,10 +214,12 @@ export type ConstructorWhereUniqueInput = Prisma.AtLeast<{
   nationality?: Prisma.StringFilter<"Constructor"> | string
   createdAt?: Prisma.DateTimeFilter<"Constructor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Constructor"> | Date | string
-  raceWinnerConstructors?: Prisma.RaceListRelationFilter
-}, "constructorId" | "name">
+  driverRaceWinner?: Prisma.RaceListRelationFilter
+  driverSeasonWinner?: Prisma.SeasonListRelationFilter
+}, "id" | "constructorId" | "name">
 
 export type ConstructorOrderByWithAggregationInput = {
+  id?: Prisma.SortOrder
   constructorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
@@ -220,6 +234,7 @@ export type ConstructorScalarWhereWithAggregatesInput = {
   AND?: Prisma.ConstructorScalarWhereWithAggregatesInput | Prisma.ConstructorScalarWhereWithAggregatesInput[]
   OR?: Prisma.ConstructorScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ConstructorScalarWhereWithAggregatesInput | Prisma.ConstructorScalarWhereWithAggregatesInput[]
+  id?: Prisma.StringWithAggregatesFilter<"Constructor"> | string
   constructorId?: Prisma.StringWithAggregatesFilter<"Constructor"> | string
   name?: Prisma.StringWithAggregatesFilter<"Constructor"> | string
   nationality?: Prisma.StringWithAggregatesFilter<"Constructor"> | string
@@ -228,42 +243,51 @@ export type ConstructorScalarWhereWithAggregatesInput = {
 }
 
 export type ConstructorCreateInput = {
+  id?: string
   constructorId: string
   name: string
   nationality: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  raceWinnerConstructors?: Prisma.RaceCreateNestedManyWithoutWinnerConstructorInput
+  driverRaceWinner?: Prisma.RaceCreateNestedManyWithoutWinnerConstructorInput
+  driverSeasonWinner?: Prisma.SeasonCreateNestedManyWithoutChampionConstructorInput
 }
 
 export type ConstructorUncheckedCreateInput = {
+  id?: string
   constructorId: string
   name: string
   nationality: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  raceWinnerConstructors?: Prisma.RaceUncheckedCreateNestedManyWithoutWinnerConstructorInput
+  driverRaceWinner?: Prisma.RaceUncheckedCreateNestedManyWithoutWinnerConstructorInput
+  driverSeasonWinner?: Prisma.SeasonUncheckedCreateNestedManyWithoutChampionConstructorInput
 }
 
 export type ConstructorUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   constructorId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nationality?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  raceWinnerConstructors?: Prisma.RaceUpdateManyWithoutWinnerConstructorNestedInput
+  driverRaceWinner?: Prisma.RaceUpdateManyWithoutWinnerConstructorNestedInput
+  driverSeasonWinner?: Prisma.SeasonUpdateManyWithoutChampionConstructorNestedInput
 }
 
 export type ConstructorUncheckedUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   constructorId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nationality?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  raceWinnerConstructors?: Prisma.RaceUncheckedUpdateManyWithoutWinnerConstructorNestedInput
+  driverRaceWinner?: Prisma.RaceUncheckedUpdateManyWithoutWinnerConstructorNestedInput
+  driverSeasonWinner?: Prisma.SeasonUncheckedUpdateManyWithoutChampionConstructorNestedInput
 }
 
 export type ConstructorCreateManyInput = {
+  id?: string
   constructorId: string
   name: string
   nationality: string
@@ -272,6 +296,7 @@ export type ConstructorCreateManyInput = {
 }
 
 export type ConstructorUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   constructorId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nationality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -280,6 +305,7 @@ export type ConstructorUpdateManyMutationInput = {
 }
 
 export type ConstructorUncheckedUpdateManyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   constructorId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nationality?: Prisma.StringFieldUpdateOperationsInput | string
@@ -293,6 +319,7 @@ export type ConstructorScalarRelationFilter = {
 }
 
 export type ConstructorCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   constructorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
@@ -301,6 +328,7 @@ export type ConstructorCountOrderByAggregateInput = {
 }
 
 export type ConstructorMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   constructorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
@@ -309,6 +337,7 @@ export type ConstructorMaxOrderByAggregateInput = {
 }
 
 export type ConstructorMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   constructorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
@@ -316,66 +345,144 @@ export type ConstructorMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type ConstructorCreateNestedOneWithoutRaceWinnerConstructorsInput = {
-  create?: Prisma.XOR<Prisma.ConstructorCreateWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUncheckedCreateWithoutRaceWinnerConstructorsInput>
-  connectOrCreate?: Prisma.ConstructorCreateOrConnectWithoutRaceWinnerConstructorsInput
+export type ConstructorCreateNestedOneWithoutDriverSeasonWinnerInput = {
+  create?: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverSeasonWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverSeasonWinnerInput>
+  connectOrCreate?: Prisma.ConstructorCreateOrConnectWithoutDriverSeasonWinnerInput
   connect?: Prisma.ConstructorWhereUniqueInput
 }
 
-export type ConstructorUpdateOneRequiredWithoutRaceWinnerConstructorsNestedInput = {
-  create?: Prisma.XOR<Prisma.ConstructorCreateWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUncheckedCreateWithoutRaceWinnerConstructorsInput>
-  connectOrCreate?: Prisma.ConstructorCreateOrConnectWithoutRaceWinnerConstructorsInput
-  upsert?: Prisma.ConstructorUpsertWithoutRaceWinnerConstructorsInput
+export type ConstructorUpdateOneRequiredWithoutDriverSeasonWinnerNestedInput = {
+  create?: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverSeasonWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverSeasonWinnerInput>
+  connectOrCreate?: Prisma.ConstructorCreateOrConnectWithoutDriverSeasonWinnerInput
+  upsert?: Prisma.ConstructorUpsertWithoutDriverSeasonWinnerInput
   connect?: Prisma.ConstructorWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ConstructorUpdateToOneWithWhereWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUpdateWithoutRaceWinnerConstructorsInput>, Prisma.ConstructorUncheckedUpdateWithoutRaceWinnerConstructorsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ConstructorUpdateToOneWithWhereWithoutDriverSeasonWinnerInput, Prisma.ConstructorUpdateWithoutDriverSeasonWinnerInput>, Prisma.ConstructorUncheckedUpdateWithoutDriverSeasonWinnerInput>
 }
 
-export type ConstructorCreateWithoutRaceWinnerConstructorsInput = {
+export type ConstructorCreateNestedOneWithoutDriverRaceWinnerInput = {
+  create?: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverRaceWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverRaceWinnerInput>
+  connectOrCreate?: Prisma.ConstructorCreateOrConnectWithoutDriverRaceWinnerInput
+  connect?: Prisma.ConstructorWhereUniqueInput
+}
+
+export type ConstructorUpdateOneRequiredWithoutDriverRaceWinnerNestedInput = {
+  create?: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverRaceWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverRaceWinnerInput>
+  connectOrCreate?: Prisma.ConstructorCreateOrConnectWithoutDriverRaceWinnerInput
+  upsert?: Prisma.ConstructorUpsertWithoutDriverRaceWinnerInput
+  connect?: Prisma.ConstructorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ConstructorUpdateToOneWithWhereWithoutDriverRaceWinnerInput, Prisma.ConstructorUpdateWithoutDriverRaceWinnerInput>, Prisma.ConstructorUncheckedUpdateWithoutDriverRaceWinnerInput>
+}
+
+export type ConstructorCreateWithoutDriverSeasonWinnerInput = {
+  id?: string
   constructorId: string
   name: string
   nationality: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  driverRaceWinner?: Prisma.RaceCreateNestedManyWithoutWinnerConstructorInput
 }
 
-export type ConstructorUncheckedCreateWithoutRaceWinnerConstructorsInput = {
+export type ConstructorUncheckedCreateWithoutDriverSeasonWinnerInput = {
+  id?: string
   constructorId: string
   name: string
   nationality: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  driverRaceWinner?: Prisma.RaceUncheckedCreateNestedManyWithoutWinnerConstructorInput
 }
 
-export type ConstructorCreateOrConnectWithoutRaceWinnerConstructorsInput = {
+export type ConstructorCreateOrConnectWithoutDriverSeasonWinnerInput = {
   where: Prisma.ConstructorWhereUniqueInput
-  create: Prisma.XOR<Prisma.ConstructorCreateWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUncheckedCreateWithoutRaceWinnerConstructorsInput>
+  create: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverSeasonWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverSeasonWinnerInput>
 }
 
-export type ConstructorUpsertWithoutRaceWinnerConstructorsInput = {
-  update: Prisma.XOR<Prisma.ConstructorUpdateWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUncheckedUpdateWithoutRaceWinnerConstructorsInput>
-  create: Prisma.XOR<Prisma.ConstructorCreateWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUncheckedCreateWithoutRaceWinnerConstructorsInput>
+export type ConstructorUpsertWithoutDriverSeasonWinnerInput = {
+  update: Prisma.XOR<Prisma.ConstructorUpdateWithoutDriverSeasonWinnerInput, Prisma.ConstructorUncheckedUpdateWithoutDriverSeasonWinnerInput>
+  create: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverSeasonWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverSeasonWinnerInput>
   where?: Prisma.ConstructorWhereInput
 }
 
-export type ConstructorUpdateToOneWithWhereWithoutRaceWinnerConstructorsInput = {
+export type ConstructorUpdateToOneWithWhereWithoutDriverSeasonWinnerInput = {
   where?: Prisma.ConstructorWhereInput
-  data: Prisma.XOR<Prisma.ConstructorUpdateWithoutRaceWinnerConstructorsInput, Prisma.ConstructorUncheckedUpdateWithoutRaceWinnerConstructorsInput>
+  data: Prisma.XOR<Prisma.ConstructorUpdateWithoutDriverSeasonWinnerInput, Prisma.ConstructorUncheckedUpdateWithoutDriverSeasonWinnerInput>
 }
 
-export type ConstructorUpdateWithoutRaceWinnerConstructorsInput = {
+export type ConstructorUpdateWithoutDriverSeasonWinnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   constructorId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nationality?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  driverRaceWinner?: Prisma.RaceUpdateManyWithoutWinnerConstructorNestedInput
 }
 
-export type ConstructorUncheckedUpdateWithoutRaceWinnerConstructorsInput = {
+export type ConstructorUncheckedUpdateWithoutDriverSeasonWinnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   constructorId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nationality?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  driverRaceWinner?: Prisma.RaceUncheckedUpdateManyWithoutWinnerConstructorNestedInput
+}
+
+export type ConstructorCreateWithoutDriverRaceWinnerInput = {
+  id?: string
+  constructorId: string
+  name: string
+  nationality: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  driverSeasonWinner?: Prisma.SeasonCreateNestedManyWithoutChampionConstructorInput
+}
+
+export type ConstructorUncheckedCreateWithoutDriverRaceWinnerInput = {
+  id?: string
+  constructorId: string
+  name: string
+  nationality: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  driverSeasonWinner?: Prisma.SeasonUncheckedCreateNestedManyWithoutChampionConstructorInput
+}
+
+export type ConstructorCreateOrConnectWithoutDriverRaceWinnerInput = {
+  where: Prisma.ConstructorWhereUniqueInput
+  create: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverRaceWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverRaceWinnerInput>
+}
+
+export type ConstructorUpsertWithoutDriverRaceWinnerInput = {
+  update: Prisma.XOR<Prisma.ConstructorUpdateWithoutDriverRaceWinnerInput, Prisma.ConstructorUncheckedUpdateWithoutDriverRaceWinnerInput>
+  create: Prisma.XOR<Prisma.ConstructorCreateWithoutDriverRaceWinnerInput, Prisma.ConstructorUncheckedCreateWithoutDriverRaceWinnerInput>
+  where?: Prisma.ConstructorWhereInput
+}
+
+export type ConstructorUpdateToOneWithWhereWithoutDriverRaceWinnerInput = {
+  where?: Prisma.ConstructorWhereInput
+  data: Prisma.XOR<Prisma.ConstructorUpdateWithoutDriverRaceWinnerInput, Prisma.ConstructorUncheckedUpdateWithoutDriverRaceWinnerInput>
+}
+
+export type ConstructorUpdateWithoutDriverRaceWinnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  constructorId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nationality?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  driverSeasonWinner?: Prisma.SeasonUpdateManyWithoutChampionConstructorNestedInput
+}
+
+export type ConstructorUncheckedUpdateWithoutDriverRaceWinnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  constructorId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nationality?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  driverSeasonWinner?: Prisma.SeasonUncheckedUpdateManyWithoutChampionConstructorNestedInput
 }
 
 
@@ -384,11 +491,13 @@ export type ConstructorUncheckedUpdateWithoutRaceWinnerConstructorsInput = {
  */
 
 export type ConstructorCountOutputType = {
-  raceWinnerConstructors: number
+  driverRaceWinner: number
+  driverSeasonWinner: number
 }
 
 export type ConstructorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  raceWinnerConstructors?: boolean | ConstructorCountOutputTypeCountRaceWinnerConstructorsArgs
+  driverRaceWinner?: boolean | ConstructorCountOutputTypeCountDriverRaceWinnerArgs
+  driverSeasonWinner?: boolean | ConstructorCountOutputTypeCountDriverSeasonWinnerArgs
 }
 
 /**
@@ -404,22 +513,32 @@ export type ConstructorCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
 /**
  * ConstructorCountOutputType without action
  */
-export type ConstructorCountOutputTypeCountRaceWinnerConstructorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ConstructorCountOutputTypeCountDriverRaceWinnerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RaceWhereInput
+}
+
+/**
+ * ConstructorCountOutputType without action
+ */
+export type ConstructorCountOutputTypeCountDriverSeasonWinnerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SeasonWhereInput
 }
 
 
 export type ConstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   constructorId?: boolean
   name?: boolean
   nationality?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  raceWinnerConstructors?: boolean | Prisma.Constructor$raceWinnerConstructorsArgs<ExtArgs>
+  driverRaceWinner?: boolean | Prisma.Constructor$driverRaceWinnerArgs<ExtArgs>
+  driverSeasonWinner?: boolean | Prisma.Constructor$driverSeasonWinnerArgs<ExtArgs>
   _count?: boolean | Prisma.ConstructorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["constructor"]>
 
 export type ConstructorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   constructorId?: boolean
   name?: boolean
   nationality?: boolean
@@ -428,6 +547,7 @@ export type ConstructorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 }, ExtArgs["result"]["constructor"]>
 
 export type ConstructorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   constructorId?: boolean
   name?: boolean
   nationality?: boolean
@@ -436,6 +556,7 @@ export type ConstructorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 }, ExtArgs["result"]["constructor"]>
 
 export type ConstructorSelectScalar = {
+  id?: boolean
   constructorId?: boolean
   name?: boolean
   nationality?: boolean
@@ -443,9 +564,10 @@ export type ConstructorSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ConstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"constructorId" | "name" | "nationality" | "createdAt" | "updatedAt", ExtArgs["result"]["constructor"]>
+export type ConstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "constructorId" | "name" | "nationality" | "createdAt" | "updatedAt", ExtArgs["result"]["constructor"]>
 export type ConstructorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  raceWinnerConstructors?: boolean | Prisma.Constructor$raceWinnerConstructorsArgs<ExtArgs>
+  driverRaceWinner?: boolean | Prisma.Constructor$driverRaceWinnerArgs<ExtArgs>
+  driverSeasonWinner?: boolean | Prisma.Constructor$driverSeasonWinnerArgs<ExtArgs>
   _count?: boolean | Prisma.ConstructorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ConstructorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -454,9 +576,11 @@ export type ConstructorIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $ConstructorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Constructor"
   objects: {
-    raceWinnerConstructors: Prisma.$RacePayload<ExtArgs>[]
+    driverRaceWinner: Prisma.$RacePayload<ExtArgs>[]
+    driverSeasonWinner: Prisma.$SeasonPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    id: string
     constructorId: string
     name: string
     nationality: string
@@ -545,8 +669,8 @@ export interface ConstructorDelegate<ExtArgs extends runtime.Types.Extensions.In
    * // Get first 10 Constructors
    * const constructors = await prisma.constructor.findMany({ take: 10 })
    * 
-   * // Only select the `constructorId`
-   * const constructorWithConstructorIdOnly = await prisma.constructor.findMany({ select: { constructorId: true } })
+   * // Only select the `id`
+   * const constructorWithIdOnly = await prisma.constructor.findMany({ select: { id: true } })
    * 
    */
   findMany<T extends ConstructorFindManyArgs>(args?: Prisma.SelectSubset<T, ConstructorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConstructorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -590,9 +714,9 @@ export interface ConstructorDelegate<ExtArgs extends runtime.Types.Extensions.In
    *   ]
    * })
    * 
-   * // Create many Constructors and only return the `constructorId`
-   * const constructorWithConstructorIdOnly = await prisma.constructor.createManyAndReturn({
-   *   select: { constructorId: true },
+   * // Create many Constructors and only return the `id`
+   * const constructorWithIdOnly = await prisma.constructor.createManyAndReturn({
+   *   select: { id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -681,9 +805,9 @@ export interface ConstructorDelegate<ExtArgs extends runtime.Types.Extensions.In
    *   ]
    * })
    * 
-   * // Update zero or more Constructors and only return the `constructorId`
-   * const constructorWithConstructorIdOnly = await prisma.constructor.updateManyAndReturn({
-   *   select: { constructorId: true },
+   * // Update zero or more Constructors and only return the `id`
+   * const constructorWithIdOnly = await prisma.constructor.updateManyAndReturn({
+   *   select: { id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -856,7 +980,8 @@ readonly fields: ConstructorFieldRefs;
  */
 export interface Prisma__ConstructorClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  raceWinnerConstructors<T extends Prisma.Constructor$raceWinnerConstructorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Constructor$raceWinnerConstructorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driverRaceWinner<T extends Prisma.Constructor$driverRaceWinnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Constructor$driverRaceWinnerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driverSeasonWinner<T extends Prisma.Constructor$driverSeasonWinnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Constructor$driverSeasonWinnerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -886,6 +1011,7 @@ export interface Prisma__ConstructorClient<T, Null = never, ExtArgs extends runt
  * Fields of the Constructor model
  */
 export interface ConstructorFieldRefs {
+  readonly id: Prisma.FieldRef<"Constructor", 'String'>
   readonly constructorId: Prisma.FieldRef<"Constructor", 'String'>
   readonly name: Prisma.FieldRef<"Constructor", 'String'>
   readonly nationality: Prisma.FieldRef<"Constructor", 'String'>
@@ -1279,9 +1405,9 @@ export type ConstructorDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * Constructor.raceWinnerConstructors
+ * Constructor.driverRaceWinner
  */
-export type Constructor$raceWinnerConstructorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Constructor$driverRaceWinnerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Race
    */
@@ -1300,6 +1426,30 @@ export type Constructor$raceWinnerConstructorsArgs<ExtArgs extends runtime.Types
   take?: number
   skip?: number
   distinct?: Prisma.RaceScalarFieldEnum | Prisma.RaceScalarFieldEnum[]
+}
+
+/**
+ * Constructor.driverSeasonWinner
+ */
+export type Constructor$driverSeasonWinnerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Season
+   */
+  select?: Prisma.SeasonSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Season
+   */
+  omit?: Prisma.SeasonOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SeasonInclude<ExtArgs> | null
+  where?: Prisma.SeasonWhereInput
+  orderBy?: Prisma.SeasonOrderByWithRelationInput | Prisma.SeasonOrderByWithRelationInput[]
+  cursor?: Prisma.SeasonWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SeasonScalarFieldEnum | Prisma.SeasonScalarFieldEnum[]
 }
 
 /**

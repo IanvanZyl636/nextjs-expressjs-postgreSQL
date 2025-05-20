@@ -19,37 +19,30 @@ export type CircuitModel = runtime.Types.Result.DefaultSelection<Prisma.$Circuit
 
 export type AggregateCircuit = {
   _count: CircuitCountAggregateOutputType | null
-  _avg: CircuitAvgAggregateOutputType | null
-  _sum: CircuitSumAggregateOutputType | null
   _min: CircuitMinAggregateOutputType | null
   _max: CircuitMaxAggregateOutputType | null
 }
 
-export type CircuitAvgAggregateOutputType = {
-  locationId: number | null
-}
-
-export type CircuitSumAggregateOutputType = {
-  locationId: number | null
-}
-
 export type CircuitMinAggregateOutputType = {
+  id: string | null
   circuitId: string | null
   circuitName: string | null
-  locationId: number | null
+  locationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type CircuitMaxAggregateOutputType = {
+  id: string | null
   circuitId: string | null
   circuitName: string | null
-  locationId: number | null
+  locationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type CircuitCountAggregateOutputType = {
+  id: number
   circuitId: number
   circuitName: number
   locationId: number
@@ -59,15 +52,8 @@ export type CircuitCountAggregateOutputType = {
 }
 
 
-export type CircuitAvgAggregateInputType = {
-  locationId?: true
-}
-
-export type CircuitSumAggregateInputType = {
-  locationId?: true
-}
-
 export type CircuitMinAggregateInputType = {
+  id?: true
   circuitId?: true
   circuitName?: true
   locationId?: true
@@ -76,6 +62,7 @@ export type CircuitMinAggregateInputType = {
 }
 
 export type CircuitMaxAggregateInputType = {
+  id?: true
   circuitId?: true
   circuitName?: true
   locationId?: true
@@ -84,6 +71,7 @@ export type CircuitMaxAggregateInputType = {
 }
 
 export type CircuitCountAggregateInputType = {
+  id?: true
   circuitId?: true
   circuitName?: true
   locationId?: true
@@ -130,18 +118,6 @@ export type CircuitAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: CircuitAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: CircuitSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: CircuitMinAggregateInputType
@@ -172,21 +148,18 @@ export type CircuitGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: CircuitCountAggregateInputType | true
-  _avg?: CircuitAvgAggregateInputType
-  _sum?: CircuitSumAggregateInputType
   _min?: CircuitMinAggregateInputType
   _max?: CircuitMaxAggregateInputType
 }
 
 export type CircuitGroupByOutputType = {
+  id: string
   circuitId: string
   circuitName: string
-  locationId: number
+  locationId: string
   createdAt: Date
   updatedAt: Date
   _count: CircuitCountAggregateOutputType | null
-  _avg: CircuitAvgAggregateOutputType | null
-  _sum: CircuitSumAggregateOutputType | null
   _min: CircuitMinAggregateOutputType | null
   _max: CircuitMaxAggregateOutputType | null
 }
@@ -210,9 +183,10 @@ export type CircuitWhereInput = {
   AND?: Prisma.CircuitWhereInput | Prisma.CircuitWhereInput[]
   OR?: Prisma.CircuitWhereInput[]
   NOT?: Prisma.CircuitWhereInput | Prisma.CircuitWhereInput[]
+  id?: Prisma.StringFilter<"Circuit"> | string
   circuitId?: Prisma.StringFilter<"Circuit"> | string
   circuitName?: Prisma.StringFilter<"Circuit"> | string
-  locationId?: Prisma.IntFilter<"Circuit"> | number
+  locationId?: Prisma.StringFilter<"Circuit"> | string
   createdAt?: Prisma.DateTimeFilter<"Circuit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Circuit"> | Date | string
   location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
@@ -220,6 +194,7 @@ export type CircuitWhereInput = {
 }
 
 export type CircuitOrderByWithRelationInput = {
+  id?: Prisma.SortOrder
   circuitId?: Prisma.SortOrder
   circuitName?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
@@ -230,8 +205,9 @@ export type CircuitOrderByWithRelationInput = {
 }
 
 export type CircuitWhereUniqueInput = Prisma.AtLeast<{
+  id?: string
   circuitId?: string
-  locationId?: number
+  locationId?: string
   AND?: Prisma.CircuitWhereInput | Prisma.CircuitWhereInput[]
   OR?: Prisma.CircuitWhereInput[]
   NOT?: Prisma.CircuitWhereInput | Prisma.CircuitWhereInput[]
@@ -240,33 +216,34 @@ export type CircuitWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Circuit"> | Date | string
   location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   races?: Prisma.RaceListRelationFilter
-}, "circuitId" | "locationId">
+}, "id" | "circuitId" | "locationId">
 
 export type CircuitOrderByWithAggregationInput = {
+  id?: Prisma.SortOrder
   circuitId?: Prisma.SortOrder
   circuitName?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CircuitCountOrderByAggregateInput
-  _avg?: Prisma.CircuitAvgOrderByAggregateInput
   _max?: Prisma.CircuitMaxOrderByAggregateInput
   _min?: Prisma.CircuitMinOrderByAggregateInput
-  _sum?: Prisma.CircuitSumOrderByAggregateInput
 }
 
 export type CircuitScalarWhereWithAggregatesInput = {
   AND?: Prisma.CircuitScalarWhereWithAggregatesInput | Prisma.CircuitScalarWhereWithAggregatesInput[]
   OR?: Prisma.CircuitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CircuitScalarWhereWithAggregatesInput | Prisma.CircuitScalarWhereWithAggregatesInput[]
+  id?: Prisma.StringWithAggregatesFilter<"Circuit"> | string
   circuitId?: Prisma.StringWithAggregatesFilter<"Circuit"> | string
   circuitName?: Prisma.StringWithAggregatesFilter<"Circuit"> | string
-  locationId?: Prisma.IntWithAggregatesFilter<"Circuit"> | number
+  locationId?: Prisma.StringWithAggregatesFilter<"Circuit"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Circuit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Circuit"> | Date | string
 }
 
 export type CircuitCreateInput = {
+  id?: string
   circuitId: string
   circuitName: string
   createdAt?: Date | string
@@ -276,15 +253,17 @@ export type CircuitCreateInput = {
 }
 
 export type CircuitUncheckedCreateInput = {
+  id?: string
   circuitId: string
   circuitName: string
-  locationId: number
+  locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   races?: Prisma.RaceUncheckedCreateNestedManyWithoutCircuitInput
 }
 
 export type CircuitUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -294,23 +273,26 @@ export type CircuitUpdateInput = {
 }
 
 export type CircuitUncheckedUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.IntFieldUpdateOperationsInput | number
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   races?: Prisma.RaceUncheckedUpdateManyWithoutCircuitNestedInput
 }
 
 export type CircuitCreateManyInput = {
+  id?: string
   circuitId: string
   circuitName: string
-  locationId: number
+  locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CircuitUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -318,9 +300,10 @@ export type CircuitUpdateManyMutationInput = {
 }
 
 export type CircuitUncheckedUpdateManyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.IntFieldUpdateOperationsInput | number
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -331,6 +314,7 @@ export type CircuitScalarRelationFilter = {
 }
 
 export type CircuitCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   circuitId?: Prisma.SortOrder
   circuitName?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
@@ -338,11 +322,8 @@ export type CircuitCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type CircuitAvgOrderByAggregateInput = {
-  locationId?: Prisma.SortOrder
-}
-
 export type CircuitMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   circuitId?: Prisma.SortOrder
   circuitName?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
@@ -351,15 +332,12 @@ export type CircuitMaxOrderByAggregateInput = {
 }
 
 export type CircuitMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   circuitId?: Prisma.SortOrder
   circuitName?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type CircuitSumOrderByAggregateInput = {
-  locationId?: Prisma.SortOrder
 }
 
 export type CircuitNullableScalarRelationFilter = {
@@ -414,6 +392,7 @@ export type CircuitUncheckedUpdateOneWithoutLocationNestedInput = {
 }
 
 export type CircuitCreateWithoutRacesInput = {
+  id?: string
   circuitId: string
   circuitName: string
   createdAt?: Date | string
@@ -422,9 +401,10 @@ export type CircuitCreateWithoutRacesInput = {
 }
 
 export type CircuitUncheckedCreateWithoutRacesInput = {
+  id?: string
   circuitId: string
   circuitName: string
-  locationId: number
+  locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -446,6 +426,7 @@ export type CircuitUpdateToOneWithWhereWithoutRacesInput = {
 }
 
 export type CircuitUpdateWithoutRacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -454,14 +435,16 @@ export type CircuitUpdateWithoutRacesInput = {
 }
 
 export type CircuitUncheckedUpdateWithoutRacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.IntFieldUpdateOperationsInput | number
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CircuitCreateWithoutLocationInput = {
+  id?: string
   circuitId: string
   circuitName: string
   createdAt?: Date | string
@@ -470,6 +453,7 @@ export type CircuitCreateWithoutLocationInput = {
 }
 
 export type CircuitUncheckedCreateWithoutLocationInput = {
+  id?: string
   circuitId: string
   circuitName: string
   createdAt?: Date | string
@@ -494,6 +478,7 @@ export type CircuitUpdateToOneWithWhereWithoutLocationInput = {
 }
 
 export type CircuitUpdateWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -502,6 +487,7 @@ export type CircuitUpdateWithoutLocationInput = {
 }
 
 export type CircuitUncheckedUpdateWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   circuitId?: Prisma.StringFieldUpdateOperationsInput | string
   circuitName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -541,6 +527,7 @@ export type CircuitCountOutputTypeCountRacesArgs<ExtArgs extends runtime.Types.E
 
 
 export type CircuitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   circuitId?: boolean
   circuitName?: boolean
   locationId?: boolean
@@ -552,6 +539,7 @@ export type CircuitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 }, ExtArgs["result"]["circuit"]>
 
 export type CircuitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   circuitId?: boolean
   circuitName?: boolean
   locationId?: boolean
@@ -561,6 +549,7 @@ export type CircuitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 }, ExtArgs["result"]["circuit"]>
 
 export type CircuitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   circuitId?: boolean
   circuitName?: boolean
   locationId?: boolean
@@ -570,6 +559,7 @@ export type CircuitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 }, ExtArgs["result"]["circuit"]>
 
 export type CircuitSelectScalar = {
+  id?: boolean
   circuitId?: boolean
   circuitName?: boolean
   locationId?: boolean
@@ -577,7 +567,7 @@ export type CircuitSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CircuitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"circuitId" | "circuitName" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["circuit"]>
+export type CircuitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "circuitId" | "circuitName" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["circuit"]>
 export type CircuitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   races?: boolean | Prisma.Circuit$racesArgs<ExtArgs>
@@ -597,9 +587,10 @@ export type $CircuitPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     races: Prisma.$RacePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    id: string
     circuitId: string
     circuitName: string
-    locationId: number
+    locationId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["circuit"]>
@@ -685,8 +676,8 @@ export interface CircuitDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * // Get first 10 Circuits
    * const circuits = await prisma.circuit.findMany({ take: 10 })
    * 
-   * // Only select the `circuitId`
-   * const circuitWithCircuitIdOnly = await prisma.circuit.findMany({ select: { circuitId: true } })
+   * // Only select the `id`
+   * const circuitWithIdOnly = await prisma.circuit.findMany({ select: { id: true } })
    * 
    */
   findMany<T extends CircuitFindManyArgs>(args?: Prisma.SelectSubset<T, CircuitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CircuitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -730,9 +721,9 @@ export interface CircuitDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    *   ]
    * })
    * 
-   * // Create many Circuits and only return the `circuitId`
-   * const circuitWithCircuitIdOnly = await prisma.circuit.createManyAndReturn({
-   *   select: { circuitId: true },
+   * // Create many Circuits and only return the `id`
+   * const circuitWithIdOnly = await prisma.circuit.createManyAndReturn({
+   *   select: { id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -821,9 +812,9 @@ export interface CircuitDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    *   ]
    * })
    * 
-   * // Update zero or more Circuits and only return the `circuitId`
-   * const circuitWithCircuitIdOnly = await prisma.circuit.updateManyAndReturn({
-   *   select: { circuitId: true },
+   * // Update zero or more Circuits and only return the `id`
+   * const circuitWithIdOnly = await prisma.circuit.updateManyAndReturn({
+   *   select: { id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1027,9 +1018,10 @@ export interface Prisma__CircuitClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Circuit model
  */
 export interface CircuitFieldRefs {
+  readonly id: Prisma.FieldRef<"Circuit", 'String'>
   readonly circuitId: Prisma.FieldRef<"Circuit", 'String'>
   readonly circuitName: Prisma.FieldRef<"Circuit", 'String'>
-  readonly locationId: Prisma.FieldRef<"Circuit", 'Int'>
+  readonly locationId: Prisma.FieldRef<"Circuit", 'String'>
   readonly createdAt: Prisma.FieldRef<"Circuit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Circuit", 'DateTime'>
 }

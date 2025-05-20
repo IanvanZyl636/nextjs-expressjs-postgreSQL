@@ -906,6 +906,7 @@ export const SeasonScalarFieldEnum = {
   id: 'id',
   year: 'year',
   championId: 'championId',
+  championConstructorId: 'championConstructorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -932,6 +933,7 @@ export type RaceScalarFieldEnum = (typeof RaceScalarFieldEnum)[keyof typeof Race
 
 
 export const CircuitScalarFieldEnum = {
+  id: 'id',
   circuitId: 'circuitId',
   circuitName: 'circuitName',
   locationId: 'locationId',
@@ -956,6 +958,7 @@ export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typ
 
 
 export const ConstructorScalarFieldEnum = {
+  id: 'id',
   constructorId: 'constructorId',
   name: 'name',
   nationality: 'nationality',
@@ -967,6 +970,7 @@ export type ConstructorScalarFieldEnum = (typeof ConstructorScalarFieldEnum)[key
 
 
 export const DriverScalarFieldEnum = {
+  id: 'id',
   driverId: 'driverId',
   fullName: 'fullName',
   code: 'code',
@@ -1001,20 +1005,6 @@ export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'String'
  */
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -1025,6 +1015,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 

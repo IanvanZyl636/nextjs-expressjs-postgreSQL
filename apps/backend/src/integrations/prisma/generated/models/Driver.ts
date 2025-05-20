@@ -24,6 +24,7 @@ export type AggregateDriver = {
 }
 
 export type DriverMinAggregateOutputType = {
+  id: string | null
   driverId: string | null
   fullName: string | null
   code: string | null
@@ -33,6 +34,7 @@ export type DriverMinAggregateOutputType = {
 }
 
 export type DriverMaxAggregateOutputType = {
+  id: string | null
   driverId: string | null
   fullName: string | null
   code: string | null
@@ -42,6 +44,7 @@ export type DriverMaxAggregateOutputType = {
 }
 
 export type DriverCountAggregateOutputType = {
+  id: number
   driverId: number
   fullName: number
   code: number
@@ -53,6 +56,7 @@ export type DriverCountAggregateOutputType = {
 
 
 export type DriverMinAggregateInputType = {
+  id?: true
   driverId?: true
   fullName?: true
   code?: true
@@ -62,6 +66,7 @@ export type DriverMinAggregateInputType = {
 }
 
 export type DriverMaxAggregateInputType = {
+  id?: true
   driverId?: true
   fullName?: true
   code?: true
@@ -71,6 +76,7 @@ export type DriverMaxAggregateInputType = {
 }
 
 export type DriverCountAggregateInputType = {
+  id?: true
   driverId?: true
   fullName?: true
   code?: true
@@ -153,6 +159,7 @@ export type DriverGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 export type DriverGroupByOutputType = {
+  id: string
   driverId: string
   fullName: string
   code: string
@@ -183,6 +190,7 @@ export type DriverWhereInput = {
   AND?: Prisma.DriverWhereInput | Prisma.DriverWhereInput[]
   OR?: Prisma.DriverWhereInput[]
   NOT?: Prisma.DriverWhereInput | Prisma.DriverWhereInput[]
+  id?: Prisma.StringFilter<"Driver"> | string
   driverId?: Prisma.StringFilter<"Driver"> | string
   fullName?: Prisma.StringFilter<"Driver"> | string
   code?: Prisma.StringFilter<"Driver"> | string
@@ -194,6 +202,7 @@ export type DriverWhereInput = {
 }
 
 export type DriverOrderByWithRelationInput = {
+  id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -205,6 +214,7 @@ export type DriverOrderByWithRelationInput = {
 }
 
 export type DriverWhereUniqueInput = Prisma.AtLeast<{
+  id?: string
   driverId?: string
   AND?: Prisma.DriverWhereInput | Prisma.DriverWhereInput[]
   OR?: Prisma.DriverWhereInput[]
@@ -216,9 +226,10 @@ export type DriverWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
   racesWon?: Prisma.RaceListRelationFilter
   championships?: Prisma.SeasonListRelationFilter
-}, "driverId">
+}, "id" | "driverId">
 
 export type DriverOrderByWithAggregationInput = {
+  id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -234,6 +245,7 @@ export type DriverScalarWhereWithAggregatesInput = {
   AND?: Prisma.DriverScalarWhereWithAggregatesInput | Prisma.DriverScalarWhereWithAggregatesInput[]
   OR?: Prisma.DriverScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DriverScalarWhereWithAggregatesInput | Prisma.DriverScalarWhereWithAggregatesInput[]
+  id?: Prisma.StringWithAggregatesFilter<"Driver"> | string
   driverId?: Prisma.StringWithAggregatesFilter<"Driver"> | string
   fullName?: Prisma.StringWithAggregatesFilter<"Driver"> | string
   code?: Prisma.StringWithAggregatesFilter<"Driver"> | string
@@ -243,6 +255,7 @@ export type DriverScalarWhereWithAggregatesInput = {
 }
 
 export type DriverCreateInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -254,6 +267,7 @@ export type DriverCreateInput = {
 }
 
 export type DriverUncheckedCreateInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -265,6 +279,7 @@ export type DriverUncheckedCreateInput = {
 }
 
 export type DriverUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -276,6 +291,7 @@ export type DriverUpdateInput = {
 }
 
 export type DriverUncheckedUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -287,6 +303,7 @@ export type DriverUncheckedUpdateInput = {
 }
 
 export type DriverCreateManyInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -296,6 +313,7 @@ export type DriverCreateManyInput = {
 }
 
 export type DriverUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -305,6 +323,7 @@ export type DriverUpdateManyMutationInput = {
 }
 
 export type DriverUncheckedUpdateManyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -319,6 +338,7 @@ export type DriverScalarRelationFilter = {
 }
 
 export type DriverCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -328,6 +348,7 @@ export type DriverCountOrderByAggregateInput = {
 }
 
 export type DriverMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -337,6 +358,7 @@ export type DriverMaxOrderByAggregateInput = {
 }
 
 export type DriverMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   code?: Prisma.SortOrder
@@ -374,6 +396,7 @@ export type DriverUpdateOneRequiredWithoutRacesWonNestedInput = {
 }
 
 export type DriverCreateWithoutChampionshipsInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -384,6 +407,7 @@ export type DriverCreateWithoutChampionshipsInput = {
 }
 
 export type DriverUncheckedCreateWithoutChampionshipsInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -410,6 +434,7 @@ export type DriverUpdateToOneWithWhereWithoutChampionshipsInput = {
 }
 
 export type DriverUpdateWithoutChampionshipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,6 +445,7 @@ export type DriverUpdateWithoutChampionshipsInput = {
 }
 
 export type DriverUncheckedUpdateWithoutChampionshipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -430,6 +456,7 @@ export type DriverUncheckedUpdateWithoutChampionshipsInput = {
 }
 
 export type DriverCreateWithoutRacesWonInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -440,6 +467,7 @@ export type DriverCreateWithoutRacesWonInput = {
 }
 
 export type DriverUncheckedCreateWithoutRacesWonInput = {
+  id?: string
   driverId: string
   fullName: string
   code: string
@@ -466,6 +494,7 @@ export type DriverUpdateToOneWithWhereWithoutRacesWonInput = {
 }
 
 export type DriverUpdateWithoutRacesWonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -476,6 +505,7 @@ export type DriverUpdateWithoutRacesWonInput = {
 }
 
 export type DriverUncheckedUpdateWithoutRacesWonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -526,6 +556,7 @@ export type DriverCountOutputTypeCountChampionshipsArgs<ExtArgs extends runtime.
 
 
 export type DriverSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   driverId?: boolean
   fullName?: boolean
   code?: boolean
@@ -538,6 +569,7 @@ export type DriverSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 }, ExtArgs["result"]["driver"]>
 
 export type DriverSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   driverId?: boolean
   fullName?: boolean
   code?: boolean
@@ -547,6 +579,7 @@ export type DriverSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 }, ExtArgs["result"]["driver"]>
 
 export type DriverSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   driverId?: boolean
   fullName?: boolean
   code?: boolean
@@ -556,6 +589,7 @@ export type DriverSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 }, ExtArgs["result"]["driver"]>
 
 export type DriverSelectScalar = {
+  id?: boolean
   driverId?: boolean
   fullName?: boolean
   code?: boolean
@@ -564,7 +598,7 @@ export type DriverSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DriverOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"driverId" | "fullName" | "code" | "nationality" | "createdAt" | "updatedAt", ExtArgs["result"]["driver"]>
+export type DriverOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "driverId" | "fullName" | "code" | "nationality" | "createdAt" | "updatedAt", ExtArgs["result"]["driver"]>
 export type DriverInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   racesWon?: boolean | Prisma.Driver$racesWonArgs<ExtArgs>
   championships?: boolean | Prisma.Driver$championshipsArgs<ExtArgs>
@@ -580,6 +614,7 @@ export type $DriverPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     championships: Prisma.$SeasonPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    id: string
     driverId: string
     fullName: string
     code: string
@@ -669,8 +704,8 @@ export interface DriverDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    * // Get first 10 Drivers
    * const drivers = await prisma.driver.findMany({ take: 10 })
    * 
-   * // Only select the `driverId`
-   * const driverWithDriverIdOnly = await prisma.driver.findMany({ select: { driverId: true } })
+   * // Only select the `id`
+   * const driverWithIdOnly = await prisma.driver.findMany({ select: { id: true } })
    * 
    */
   findMany<T extends DriverFindManyArgs>(args?: Prisma.SelectSubset<T, DriverFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -714,9 +749,9 @@ export interface DriverDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    *   ]
    * })
    * 
-   * // Create many Drivers and only return the `driverId`
-   * const driverWithDriverIdOnly = await prisma.driver.createManyAndReturn({
-   *   select: { driverId: true },
+   * // Create many Drivers and only return the `id`
+   * const driverWithIdOnly = await prisma.driver.createManyAndReturn({
+   *   select: { id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -805,9 +840,9 @@ export interface DriverDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    *   ]
    * })
    * 
-   * // Update zero or more Drivers and only return the `driverId`
-   * const driverWithDriverIdOnly = await prisma.driver.updateManyAndReturn({
-   *   select: { driverId: true },
+   * // Update zero or more Drivers and only return the `id`
+   * const driverWithIdOnly = await prisma.driver.updateManyAndReturn({
+   *   select: { id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1011,6 +1046,7 @@ export interface Prisma__DriverClient<T, Null = never, ExtArgs extends runtime.T
  * Fields of the Driver model
  */
 export interface DriverFieldRefs {
+  readonly id: Prisma.FieldRef<"Driver", 'String'>
   readonly driverId: Prisma.FieldRef<"Driver", 'String'>
   readonly fullName: Prisma.FieldRef<"Driver", 'String'>
   readonly code: Prisma.FieldRef<"Driver", 'String'>
