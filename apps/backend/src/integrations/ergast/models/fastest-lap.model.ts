@@ -1,9 +1,9 @@
-import { IAverageSpeedModel } from './average-speed.model';
-import { ITimeModel } from './time.model';
+import { AverageSpeedModel } from './average-speed.model';
+import { TimeModel } from './time.model';
 
-export interface IFastestLapModel {
+export interface FastestLapModel {
   rank: string;
   lap: string;
-  Time: ITimeModel;
-  AverageSpeed: IAverageSpeedModel;
+  Time: TimeModel;
+  AverageSpeed: AverageSpeedModel;
 }

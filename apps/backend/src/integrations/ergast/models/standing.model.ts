@@ -1,7 +1,7 @@
-import { IDriverStandingModel } from './driver-standing.model';
+import { DriverStandingModel } from './driver-standing.model';
 
-export interface IStandingModel {
+export interface StandingModel {
   season: string;
   round: string;
-  DriverStandings: IDriverStandingModel[];
+  DriverStandings: DriverStandingModel[];
 }

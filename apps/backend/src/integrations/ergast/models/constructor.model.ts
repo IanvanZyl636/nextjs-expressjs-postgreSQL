@@ -1,4 +1,4 @@
-export interface IConstructorModel {
+export interface ConstructorModel {
   constructorId: string;
   url: string;
   name: string;

@@ -1,4 +1,4 @@
-export interface IDriverModel {
+export interface DriverModel {
   driverId: string;
   code: string;
   url: string;

@@ -1,13 +1,13 @@
-import { ICircuitModel } from './circuit.model';
-import { IResultModel } from './result.model';
+import { CircuitModel } from './circuit.model';
+import { ResultModel } from './result.model';
 
-export interface IRaceModel {
+export interface RaceModel {
   season: string;
   round: string;
   url: string;
   raceName: string;
-  Circuit: ICircuitModel;
+  Circuit: CircuitModel;
   date: string;
   time: string;
-  Results: IResultModel[];
+  Results: ResultModel[];
 }

@@ -1,18 +1,18 @@
-import { IConstructorModel } from './constructor.model';
-import { IDriverModel } from './driver.model';
-import { IFastestLapModel } from './fastest-lap.model';
-import { ITimeModel } from './time.model';
+import { ConstructorModel } from './constructor.model';
+import { DriverModel } from './driver.model';
+import { FastestLapModel } from './fastest-lap.model';
+import { TimeModel } from './time.model';
 
-export interface IResultModel {
+export interface ResultModel {
   number: string;
   position: string;
   positionText: string;
   points: string;
-  Driver: IDriverModel;
-  Constructor: IConstructorModel;
+  Driver: DriverModel;
+  Constructor: ConstructorModel;
   grid: string;
   laps: string;
   status: string;
-  Time: ITimeModel;
-  FastestLap: IFastestLapModel;
+  Time: TimeModel;
+  FastestLap: FastestLapModel;
 }

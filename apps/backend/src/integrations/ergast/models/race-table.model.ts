@@ -1,7 +1,7 @@
-import { IRaceModel } from './race.model';
+import { RaceModel } from './race.model';
 
-export interface IRaceTableModel {
+export interface RaceTableModel {
   season: string;
   position: string;
-  Races: IRaceModel[];
+  Races: RaceModel[];
 }

@@ -1,8 +1,8 @@
-import { ILocationModel } from './location.model';
+import { LocationModel } from './location.model';
 
-export interface ICircuitModel {
+export interface CircuitModel {
   circuitId: string;
   url: string;
   circuitName: string;
-  Location: ILocationModel;
+  Location: LocationModel;
 }

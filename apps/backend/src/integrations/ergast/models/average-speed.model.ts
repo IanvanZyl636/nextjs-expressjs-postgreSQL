@@ -1,4 +1,4 @@
-export interface IAverageSpeedModel {
+export interface AverageSpeedModel {
   units: string;
   speed: string;
 }

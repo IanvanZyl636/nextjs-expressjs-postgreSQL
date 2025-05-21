@@ -1,11 +1,11 @@
-import { IConstructorModel } from './constructor.model';
-import { IDriverModel } from './driver.model';
+import { ConstructorModel } from './constructor.model';
+import { DriverModel } from './driver.model';
 
-export interface IDriverStandingModel {
+export interface DriverStandingModel {
   position: string;
   positionText: string;
   points: string;
   wins: string;
-  Driver: IDriverModel;
-  Constructors: IConstructorModel[];
+  Driver: DriverModel;
+  Constructors: ConstructorModel[];
 }

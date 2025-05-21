@@ -1,6 +1,6 @@
-import { IStandingModel } from './standing.model';
+import { StandingModel } from './standing.model';
 
-export interface IStandingsTableModel {
+export interface StandingsTableModel {
   driverStandings: string;
-  StandingsLists: IStandingModel[];
+  StandingsLists: StandingModel[];
 }

@@ -2,14 +2,15 @@ import {
   getDriverStandings,
   getSeasonResults,
 } from '../../integrations/ergast/ergast.service';
-import { IDriverStandingModel } from '../../integrations/ergast/models/driver-standing.model';
+import { DriverStandingModel } from '../../integrations/ergast/models/driver-standing.model';
 import prisma from '../../integrations/prisma';
-import { IStandingModel } from '../../integrations/ergast/models/standing.model';
-import { IDriverModel } from '../../integrations/ergast/models/driver.model';
-import { IConstructorModel } from '../../integrations/ergast/models/constructor.model';
-import { ICircuitModel } from '../../integrations/ergast/models/circuit.model';
-import { ILocationModel } from '../../integrations/ergast/models/location.model';
+import { StandingModel } from '../../integrations/ergast/models/standing.model';
+import { DriverModel } from '../../integrations/ergast/models/driver.model';
+import { ConstructorModel } from '../../integrations/ergast/models/constructor.model';
+import { CircuitModel } from '../../integrations/ergast/models/circuit.model';
+import { LocationModel } from '../../integrations/ergast/models/location.model';
 import { Prisma } from '../../integrations/prisma/generated';
+import { safeUpsertOrFindUnique } from '../../integrations/prisma/helpers';
 
 export function getYearsInRange(startYear: number, endYear: number) {
   const allYears: number[] = [];
@@ -54,11 +55,11 @@ export const getMissingErgastSeasonWithSeasonRaces = async (
 };
 
 export const createMissingSeasonFromErgastSeason = async (
-  ergastSeason: IStandingModel
+  ergastSeason: StandingModel
 ) => {
   const year = Number(ergastSeason.season);
   const driverStanding = ergastSeason.DriverStandings?.[0] as
-    | IDriverStandingModel
+    | DriverStandingModel
     | undefined;
   const driver = driverStanding?.Driver;
   const constructor = driverStanding?.Constructors?.[0];
@@ -70,7 +71,7 @@ export const createMissingSeasonFromErgastSeason = async (
   const savedDriver = await upsertDriver(driver);
   const savedConstructor = await upsertConstructor(constructor);
 
-  const newSeason = await prisma.season.upsert({
+  const newSeason = await safeUpsertOrFindUnique(prisma.season, {
     where: {
       year,
     },
@@ -85,9 +86,9 @@ export const createMissingSeasonFromErgastSeason = async (
   await upsertSeasonRaces(newSeason.id, year);
 };
 
-export const upsertDriver = async (ergastDriver: IDriverModel) => {
+export const upsertDriver = async (ergastDriver: DriverModel) => {
   try {
-    return await prisma.driver.upsert({
+    return await safeUpsertOrFindUnique(prisma.driver, {
       where: {
         driverId: ergastDriver.driverId,
       },
@@ -119,10 +120,10 @@ export const upsertDriver = async (ergastDriver: IDriverModel) => {
 };
 
 export const upsertConstructor = async (
-  ergastConstructor: IConstructorModel
+  ergastConstructor: ConstructorModel
 ) => {
   try {
-    return await prisma.constructor.upsert({
+    return await safeUpsertOrFindUnique(prisma.constructor, {
       where: {
         constructorId: ergastConstructor.constructorId,
       },
@@ -153,8 +154,8 @@ export const upsertConstructor = async (
   }
 };
 
-export const upsertCircuit = (locationId: string, circuit: ICircuitModel) => {
-  return prisma.circuit.upsert({
+export const upsertCircuit = (locationId: string, circuit: CircuitModel) => {
+  return safeUpsertOrFindUnique(prisma.circuit, {
     where: {
       circuitId: circuit.circuitId,
     },
@@ -167,8 +168,8 @@ export const upsertCircuit = (locationId: string, circuit: ICircuitModel) => {
   });
 };
 
-export const upsertLocation = (location: ILocationModel) => {
-  return prisma.location.upsert({
+export const upsertLocation = (location: LocationModel) => {
+  return safeUpsertOrFindUnique(prisma.location, {
     where: {
       lat_long: {
         lat: location.lat,
@@ -228,7 +229,7 @@ export const upsertSeasonRaces = async (
       ergastRaceWinnerDriverConstructor
     );
 
-    await prisma.race.upsert({
+    await safeUpsertOrFindUnique(prisma.race, {
       where: {
         seasonId_round: {
           seasonId,

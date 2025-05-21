@@ -1,4 +1,4 @@
-export interface ILocationModel {
+export interface LocationModel {
   lat: string;
   long: string;
   locality: string;

@@ -1,7 +1,7 @@
-import { IRaceTableModel } from './race-table.model';
-import { IStandingsTableModel } from './standings-table.model';
+import { RaceTableModel } from './race-table.model';
+import { StandingsTableModel } from './standings-table.model';
 
-export interface IMRDataBaseModel {
+export interface MRDataBaseModel {
   xmlns: string;
   series: string;
   url: string;
@@ -10,10 +10,10 @@ export interface IMRDataBaseModel {
   total: string;
 }
 
-export interface IMRDataStandingsModel extends IMRDataBaseModel {
-  StandingsTable: IStandingsTableModel;
+export interface MRDataStandingsModel extends MRDataBaseModel {
+  StandingsTable: StandingsTableModel;
 }
 
-export interface IMRDataRaceModel extends IMRDataBaseModel {
-  RaceTable: IRaceTableModel;
+export interface MRDataRaceModel extends MRDataBaseModel {
+  RaceTable: RaceTableModel;
 }
