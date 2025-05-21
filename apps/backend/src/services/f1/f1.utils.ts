@@ -71,7 +71,7 @@ export const createMissingSeasonFromErgastSeason = async (
   const savedDriver = await upsertDriver(driver);
   const savedConstructor = await upsertConstructor(constructor);
 
-  const newSeason = await safeUpsertOrFindUnique(prisma.season, {
+  return await safeUpsertOrFindUnique(prisma.season, {
     where: {
       year,
     },
@@ -82,8 +82,6 @@ export const createMissingSeasonFromErgastSeason = async (
       championConstructorId: savedConstructor.id,
     },
   });
-
-  await upsertSeasonRaces(newSeason.id, year);
 };
 
 export const upsertDriver = async (ergastDriver: DriverModel) => {

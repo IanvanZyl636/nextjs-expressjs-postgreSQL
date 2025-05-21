@@ -1,10 +1,14 @@
 import { getChampionBySeasons, getRaceWinnersBySeason } from './f1.service';
 import prisma from '../../integrations/prisma';
 
-fdescribe('getChampionBySeasons', () => {
+describe('getChampionBySeasons', () => {
   it('run function', async () => {
     try {
       await Promise.all([
+        getChampionBySeasons(2005),
+        getChampionBySeasons(2005),
+        getChampionBySeasons(2005),
+        getChampionBySeasons(2005),
         getChampionBySeasons(2005),
         getChampionBySeasons(2005),
         getChampionBySeasons(2005),
@@ -17,10 +21,13 @@ fdescribe('getChampionBySeasons', () => {
   }, 99999);
 });
 
-describe('getRaceWinnersBySeason', () => {
+fdescribe('getRaceWinnersBySeason', () => {
   it('run function', async () => {
     try{
-    await getRaceWinnersBySeason(2005);
+      await Promise.all([
+        getRaceWinnersBySeason(2006),
+        getRaceWinnersBySeason(2006)
+      ]);
     }catch(e){
       console.error(e);
     }

@@ -8,6 +8,7 @@
     "docker:postgresql:start": "docker-compose -f docker-compose.postgresql.yml up -d --no-deps --build",
     "prisma:migrate": "dotenv -e apps/backend/.env -- npx prisma migrate dev --schema=apps/backend/src/integrations/prisma",
     "prisma:reset": "dotenv -e apps/backend/.env -- npx prisma migrate reset --schema=apps/backend/src/integrations/prisma",
+    "prisma:reset:force": "dotenv -e apps/backend/.env -- npx prisma migrate reset --force --schema=apps/backend/src/integrations/prisma",
     "prisma:deploy": "dotenv -e apps/backend/.env -- npx prisma migrate deploy --schema=apps/backend/src/integrations/prisma",
     "prisma:seed": "dotenv -e apps/backend/.env -- npx prisma db seed --schema=apps/backend/src/integrations/prisma"
   },
