@@ -1,20 +1,15 @@
 import express from 'express';
-import * as path from 'path';
-import { getChampionBySeasons } from './services/f1/f1.service';
-
+import f1Router from './routers/f1.router';
+import { checkDBConnection } from './integrations/prisma';
 
 const app = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-
-app.get('/api', async (req, res) => {
-  const pop = await getChampionBySeasons(2005);
-
-  res.send({ message: pop });
-});
+app.use('/api', f1Router);
 
 const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+const server = app.listen(port, async ()=> {
+  await checkDBConnection();
+
+  console.log(`🚀 Server started on http://localhost:${port}`);
 });
 server.on('error', console.error);

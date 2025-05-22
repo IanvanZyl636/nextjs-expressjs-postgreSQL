@@ -1,4 +1,4 @@
-import { firstRecordedYear } from './ergast.constants';
+import {firstRecordedYear} from '@nextjs-expressjs-postgre-sql/shared'
 
 export const getDriverStandingsLimitOffset = (
   startYear: number,

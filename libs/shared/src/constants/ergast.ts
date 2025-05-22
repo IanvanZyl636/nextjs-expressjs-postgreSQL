@@ -1,0 +1,1 @@
+export const firstRecordedYear = 1950;

@@ -13,7 +13,6 @@ module.exports = {
       compiler: 'tsc',
       main: './src/main.ts',
       tsConfig: isDevelopModeEnabled ? './tsconfig.dev.json' : './tsconfig.app.json',
-      assets: ['./src/assets'],
       generatePackageJson: true,
       sourceMap: isDevelopModeEnabled,
       outputHashing: !isDevelopModeEnabled ? 'all' : 'none',

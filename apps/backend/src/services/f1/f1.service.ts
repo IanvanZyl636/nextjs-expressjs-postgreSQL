@@ -7,6 +7,7 @@ import {
   upsertSeasonRaces,
 } from './f1.utils';
 import { getOrLockAndExecute } from '../../utils/concurrency/code-block-lock.util';
+import { SortOrder } from '../../integrations/prisma/generated/internal/prismaNamespace';
 
 export const getChampionBySeasons = async (
   startYear: number,
@@ -14,10 +15,13 @@ export const getChampionBySeasons = async (
 ) => {
   endYear = endYear ?? new Date().getFullYear() - 1;
 
-  let seasons = await prisma.season.findMany({
+  const getSeasons = async () => await prisma.season.findMany({
     where: { year: { gte: startYear, lte: endYear } },
     include: { champion: true, championConstructor: true },
+    orderBy:{year:SortOrder.asc}
   });
+
+  let seasons = await getSeasons();
 
   const allYears = getYearsInRange(startYear, endYear);
   const existingYears = new Set(seasons.map((s) => s.year));
@@ -42,20 +46,19 @@ export const getChampionBySeasons = async (
       }
     );
 
-    seasons = await prisma.season.findMany({
-      where: { year: { gte: startYear, lte: endYear } },
-      include: { champion: true, championConstructor: true },
-    });
+    seasons = await getSeasons();
   }
 
   return seasons;
 };
 
 export const getRaceWinnersBySeason = async (seasonYear: number) => {
-  const season = await prisma.season.findUnique({
+  const getSeason = async () => await prisma.season.findUnique({
     where: { year: seasonYear },
     include: { champion: true, championConstructor: true, races: true },
   });
+
+  const season = await getSeason();
 
   if(season && season.races.length > 0) {
     return season;
@@ -82,8 +85,5 @@ export const getRaceWinnersBySeason = async (seasonYear: number) => {
     }
   );
 
-  return prisma.season.findUnique({
-    where: { year: seasonYear },
-    include: { champion: true, championConstructor: true, races: true },
-  });
+  return getSeason();
 };
