@@ -57,7 +57,6 @@ export const getRaceWinnersBySeason = async (seasonYear: number) => {
     where: { year: seasonYear },
     include: { champion: true, championConstructor: true, races: true },
   });
-
   const season = await getSeason();
 
   if(season && season.races.length > 0) {

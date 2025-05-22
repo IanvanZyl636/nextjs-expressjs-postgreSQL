@@ -85,5 +85,10 @@ export type Constructor = Prisma.ConstructorModel
  * 
  */
 export type Driver = Prisma.DriverModel
+/**
+ * Model Log
+ * 
+ */
+export type Log = Prisma.LogModel
 
 
