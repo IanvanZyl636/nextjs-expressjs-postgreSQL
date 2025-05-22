@@ -19,12 +19,11 @@ const router = Router();
  *    - name: endYear
  *      in: query
  *      description: End year of the seasons you want if blank will default to the last year.
- *      required: false
  *      schema:
  *       type: integer
- *  responses:
- *   200:
- *    description: a List of seasons with their champion.
+ *   responses:
+ *    200:
+ *     description: a List of seasons with their champion.
  */
 router.get('/seasons/champions', asyncHandler(getChampionBySeasonsController));
 

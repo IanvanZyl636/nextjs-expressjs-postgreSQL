@@ -14,7 +14,7 @@ export const initializeExpress = async () => new Promise<void>(resolve => {
 
   const port = process.env.PORT || 3333;
   const server = app.listen(port, async ()=> {
-    console.log(`🚀 Server started on http://localhost:${port}`);
+    console.log(`🚀 Server started!!! Check for api info on http://localhost:${port}/api-docs`);
   });
   server.on('error', console.error);
   resolve();
