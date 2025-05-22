@@ -92,11 +92,11 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.8.1
+ * Prisma Client JS version: 6.8.2
  * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.8.1",
+  client: "6.8.2",
   engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
 }
 
@@ -1060,10 +1060,9 @@ export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof 
 export const LogScalarFieldEnum = {
   id: 'id',
   level: 'level',
-  message: 'message',
-  stack: 'stack',
   requestData: 'requestData',
-  timestamp: 'timestamp'
+  timestamp: 'timestamp',
+  message: 'message'
 } as const
 
 export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]

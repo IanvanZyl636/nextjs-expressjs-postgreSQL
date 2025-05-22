@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import logger from '../integrations/winston';
-import HttpError from '../utils/error/http-error';
+import logger from '../../winston';
+import HttpError from '../../../utils/error/http-error';
 
 const errorLogger = (
   err: Error | HttpError,
@@ -10,7 +10,7 @@ const errorLogger = (
 ): void => {
   try{
   const statusCode = err instanceof HttpError ? err.statusCode : 500;
-  const message = err.message || 'Internal Server Error';
+  const message = err.stack || 'Internal Server Error';
 
   const requestData =
     req.method === 'GET'
@@ -18,13 +18,12 @@ const errorLogger = (
       : { body: req.body };
 
   logger.error({
-    message:`[${req.method}] ${req.originalUrl} - ${statusCode} - ${message}`,
-    requestData,
-    stack:err.stack,
+    message:`[${req.method}] ${req.originalUrl} - ${statusCode}\n${message}`,
+    requestData
   });
 
   res.status(statusCode).json({
-    error: message,
+    error: 'Internal Server Error',
   });
   }catch(e){
     next(e);

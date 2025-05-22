@@ -1,7 +1,5 @@
 import { createLogger, format, transports, Logger } from 'winston';
-import { PrismaClient } from '../prisma/generated';
-
-const prisma = new PrismaClient();
+import prisma from '../prisma';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const logFormat = format.printf(({ level, message, timestamp }) => {
@@ -29,7 +27,6 @@ logger.on('data', async (log) => {
       data: {
         level: log.level,
         message: log.message,
-        stack: log.stack,
         requestData: log.requestData,
         timestamp: new Date(log.timestamp || Date.now()),
       },

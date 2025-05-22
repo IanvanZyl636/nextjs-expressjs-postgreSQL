@@ -36,26 +36,23 @@ export type LogSumAggregateOutputType = {
 export type LogMinAggregateOutputType = {
   id: number | null
   level: string | null
-  message: string | null
-  stack: string | null
   timestamp: Date | null
+  message: string | null
 }
 
 export type LogMaxAggregateOutputType = {
   id: number | null
   level: string | null
-  message: string | null
-  stack: string | null
   timestamp: Date | null
+  message: string | null
 }
 
 export type LogCountAggregateOutputType = {
   id: number
   level: number
-  message: number
-  stack: number
   requestData: number
   timestamp: number
+  message: number
   _all: number
 }
 
@@ -71,26 +68,23 @@ export type LogSumAggregateInputType = {
 export type LogMinAggregateInputType = {
   id?: true
   level?: true
-  message?: true
-  stack?: true
   timestamp?: true
+  message?: true
 }
 
 export type LogMaxAggregateInputType = {
   id?: true
   level?: true
-  message?: true
-  stack?: true
   timestamp?: true
+  message?: true
 }
 
 export type LogCountAggregateInputType = {
   id?: true
   level?: true
-  message?: true
-  stack?: true
   requestData?: true
   timestamp?: true
+  message?: true
   _all?: true
 }
 
@@ -183,10 +177,9 @@ export type LogGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type LogGroupByOutputType = {
   id: number
   level: string
-  message: string
-  stack: string | null
   requestData: runtime.JsonValue | null
   timestamp: Date
+  message: string
   _count: LogCountAggregateOutputType | null
   _avg: LogAvgAggregateOutputType | null
   _sum: LogSumAggregateOutputType | null
@@ -215,19 +208,17 @@ export type LogWhereInput = {
   NOT?: Prisma.LogWhereInput | Prisma.LogWhereInput[]
   id?: Prisma.IntFilter<"Log"> | number
   level?: Prisma.StringFilter<"Log"> | string
-  message?: Prisma.StringFilter<"Log"> | string
-  stack?: Prisma.StringNullableFilter<"Log"> | string | null
   requestData?: Prisma.JsonNullableFilter<"Log">
   timestamp?: Prisma.DateTimeFilter<"Log"> | Date | string
+  message?: Prisma.StringFilter<"Log"> | string
 }
 
 export type LogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   level?: Prisma.SortOrder
-  message?: Prisma.SortOrder
-  stack?: Prisma.SortOrderInput | Prisma.SortOrder
   requestData?: Prisma.SortOrderInput | Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  message?: Prisma.SortOrder
 }
 
 export type LogWhereUniqueInput = Prisma.AtLeast<{
@@ -236,19 +227,17 @@ export type LogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LogWhereInput[]
   NOT?: Prisma.LogWhereInput | Prisma.LogWhereInput[]
   level?: Prisma.StringFilter<"Log"> | string
-  message?: Prisma.StringFilter<"Log"> | string
-  stack?: Prisma.StringNullableFilter<"Log"> | string | null
   requestData?: Prisma.JsonNullableFilter<"Log">
   timestamp?: Prisma.DateTimeFilter<"Log"> | Date | string
+  message?: Prisma.StringFilter<"Log"> | string
 }, "id">
 
 export type LogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   level?: Prisma.SortOrder
-  message?: Prisma.SortOrder
-  stack?: Prisma.SortOrderInput | Prisma.SortOrder
   requestData?: Prisma.SortOrderInput | Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  message?: Prisma.SortOrder
   _count?: Prisma.LogCountOrderByAggregateInput
   _avg?: Prisma.LogAvgOrderByAggregateInput
   _max?: Prisma.LogMaxOrderByAggregateInput
@@ -262,79 +251,70 @@ export type LogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LogScalarWhereWithAggregatesInput | Prisma.LogScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Log"> | number
   level?: Prisma.StringWithAggregatesFilter<"Log"> | string
-  message?: Prisma.StringWithAggregatesFilter<"Log"> | string
-  stack?: Prisma.StringNullableWithAggregatesFilter<"Log"> | string | null
   requestData?: Prisma.JsonNullableWithAggregatesFilter<"Log">
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"Log"> | Date | string
+  message?: Prisma.StringWithAggregatesFilter<"Log"> | string
 }
 
 export type LogCreateInput = {
   level: string
-  message: string
-  stack?: string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Date | string
+  message: string
 }
 
 export type LogUncheckedCreateInput = {
   id?: number
   level: string
-  message: string
-  stack?: string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Date | string
+  message: string
 }
 
 export type LogUpdateInput = {
   level?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  stack?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  stack?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogCreateManyInput = {
   id?: number
   level: string
-  message: string
-  stack?: string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Date | string
+  message: string
 }
 
 export type LogUpdateManyMutationInput = {
   level?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  stack?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  stack?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   level?: Prisma.SortOrder
-  message?: Prisma.SortOrder
-  stack?: Prisma.SortOrder
   requestData?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  message?: Prisma.SortOrder
 }
 
 export type LogAvgOrderByAggregateInput = {
@@ -344,25 +324,19 @@ export type LogAvgOrderByAggregateInput = {
 export type LogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   level?: Prisma.SortOrder
-  message?: Prisma.SortOrder
-  stack?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  message?: Prisma.SortOrder
 }
 
 export type LogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   level?: Prisma.SortOrder
-  message?: Prisma.SortOrder
-  stack?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  message?: Prisma.SortOrder
 }
 
 export type LogSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 
@@ -370,40 +344,36 @@ export type NullableStringFieldUpdateOperationsInput = {
 export type LogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   level?: boolean
-  message?: boolean
-  stack?: boolean
   requestData?: boolean
   timestamp?: boolean
+  message?: boolean
 }, ExtArgs["result"]["log"]>
 
 export type LogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   level?: boolean
-  message?: boolean
-  stack?: boolean
   requestData?: boolean
   timestamp?: boolean
+  message?: boolean
 }, ExtArgs["result"]["log"]>
 
 export type LogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   level?: boolean
-  message?: boolean
-  stack?: boolean
   requestData?: boolean
   timestamp?: boolean
+  message?: boolean
 }, ExtArgs["result"]["log"]>
 
 export type LogSelectScalar = {
   id?: boolean
   level?: boolean
-  message?: boolean
-  stack?: boolean
   requestData?: boolean
   timestamp?: boolean
+  message?: boolean
 }
 
-export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "level" | "message" | "stack" | "requestData" | "timestamp", ExtArgs["result"]["log"]>
+export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "level" | "requestData" | "timestamp" | "message", ExtArgs["result"]["log"]>
 
 export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Log"
@@ -411,10 +381,9 @@ export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     level: string
-    message: string
-    stack: string | null
     requestData: runtime.JsonValue | null
     timestamp: Date
+    message: string
   }, ExtArgs["result"]["log"]>
   composites: {}
 }
@@ -840,10 +809,9 @@ export interface Prisma__LogClient<T, Null = never, ExtArgs extends runtime.Type
 export interface LogFieldRefs {
   readonly id: Prisma.FieldRef<"Log", 'Int'>
   readonly level: Prisma.FieldRef<"Log", 'String'>
-  readonly message: Prisma.FieldRef<"Log", 'String'>
-  readonly stack: Prisma.FieldRef<"Log", 'String'>
   readonly requestData: Prisma.FieldRef<"Log", 'Json'>
   readonly timestamp: Prisma.FieldRef<"Log", 'DateTime'>
+  readonly message: Prisma.FieldRef<"Log", 'String'>
 }
     
 

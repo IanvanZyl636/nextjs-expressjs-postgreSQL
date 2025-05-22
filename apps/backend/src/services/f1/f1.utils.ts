@@ -9,7 +9,6 @@ import { DriverModel } from '../../integrations/ergast/models/driver.model';
 import { ConstructorModel } from '../../integrations/ergast/models/constructor.model';
 import { CircuitModel } from '../../integrations/ergast/models/circuit.model';
 import { LocationModel } from '../../integrations/ergast/models/location.model';
-import { Prisma } from '../../integrations/prisma/generated';
 import { safeUpsertOrFindUnique } from '../../integrations/prisma/helpers';
 
 export function getYearsInRange(startYear: number, endYear: number) {
@@ -75,7 +74,10 @@ export const createMissingSeasonFromErgastSeason = async (
     where: {
       year,
     },
-    update: {},
+    update: {
+      championId: savedDriver.id,
+      championConstructorId: savedConstructor.id,
+    },
     create: {
       year,
       championId: savedDriver.id,
@@ -84,90 +86,58 @@ export const createMissingSeasonFromErgastSeason = async (
   });
 };
 
-export const upsertDriver = async (ergastDriver: DriverModel) => {
-  try {
-    return await safeUpsertOrFindUnique(prisma.driver, {
-      where: {
-        driverId: ergastDriver.driverId,
-      },
-      create: {
-        driverId: ergastDriver.driverId,
-        fullName: ergastDriver.familyName,
-        code: ergastDriver.code,
-        nationality: ergastDriver.nationality,
-      },
-      update: {},
-    });
-  } catch (e) {
-    if (
-      e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code === 'P2002'
-    ) {
-      const driver = await prisma.driver.findUnique({
-        where: {
-          driverId: ergastDriver.driverId,
-        },
-      });
+export const upsertDriver = (ergastDriver: DriverModel) =>
+  safeUpsertOrFindUnique(prisma.driver, {
+    where: {
+      driverId: ergastDriver.driverId,
+    },
+    update: {
+      fullName: ergastDriver.familyName,
+      code: ergastDriver.code,
+      nationality: ergastDriver.nationality,
+    },
+    create: {
+      driverId: ergastDriver.driverId,
+      fullName: ergastDriver.familyName,
+      code: ergastDriver.code,
+      nationality: ergastDriver.nationality,
+    },
+  });
 
-      if (!driver) throw new Error('upsertDriver() driver not found');
+export const upsertConstructor = (ergastConstructor: ConstructorModel) =>
+  safeUpsertOrFindUnique(prisma.constructor, {
+    where: {
+      constructorId: ergastConstructor.constructorId,
+    },
+    update: {
+      name: ergastConstructor.name,
+      nationality: ergastConstructor.nationality,
+    },
+    create: {
+      constructorId: ergastConstructor.constructorId,
+      name: ergastConstructor.name,
+      nationality: ergastConstructor.nationality,
+    },
+  });
 
-      return driver;
-    }
-    throw e;
-  }
-};
-
-export const upsertConstructor = async (
-  ergastConstructor: ConstructorModel
-) => {
-  try {
-    return await safeUpsertOrFindUnique(prisma.constructor, {
-      where: {
-        constructorId: ergastConstructor.constructorId,
-      },
-      create: {
-        constructorId: ergastConstructor.constructorId,
-        name: ergastConstructor.name,
-        nationality: ergastConstructor.nationality,
-      },
-      update: {},
-    });
-  } catch (e) {
-    if (
-      e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code === 'P2002'
-    ) {
-      const constructor = await prisma.constructor.findUnique({
-        where: {
-          constructorId: ergastConstructor.constructorId,
-        },
-      });
-
-      if (!constructor)
-        throw new Error('upsertConstructor() constructor not found');
-
-      return constructor;
-    }
-    throw e;
-  }
-};
-
-export const upsertCircuit = (locationId: string, circuit: CircuitModel) => {
-  return safeUpsertOrFindUnique(prisma.circuit, {
+export const upsertCircuit = (locationId: string, circuit: CircuitModel) =>
+  safeUpsertOrFindUnique(prisma.circuit, {
     where: {
       circuitId: circuit.circuitId,
+    },
+    update: {
+      circuitName: circuit.circuitName,
+      locationId,
     },
     create: {
       circuitId: circuit.circuitId,
       circuitName: circuit.circuitName,
       locationId,
     },
-    update: {},
   });
-};
 
-export const upsertLocation = (location: LocationModel) => {
-  return safeUpsertOrFindUnique(prisma.location, {
+export const upsertLocation = (location: LocationModel) =>
+  safeUpsertOrFindUnique(prisma.location, {
     where: {
       lat_long: {
         lat: location.lat,
@@ -180,9 +150,11 @@ export const upsertLocation = (location: LocationModel) => {
       locality: location.locality,
       country: location.country,
     },
-    update: {},
+    update: {
+      locality: location.locality,
+      country: location.country,
+    },
   });
-};
 
 export const upsertSeasonRaces = async (
   seasonId: string,
@@ -234,7 +206,15 @@ export const upsertSeasonRaces = async (
           round: Number(ergastRace.round),
         },
       },
-      update: {},
+      update: {
+        name: ergastRace.raceName,
+        startedAt: new Date(`${ergastRace.date}T${ergastRace.time}`),
+        points: Number(ergastRaceWinnerResult.points),
+        laps: Number(ergastRaceWinnerResult.laps),
+        circuitId: savedCircuit.id,
+        winnerId: savedDriver.id,
+        winnerConstructorId: savedConstructor.id,
+      },
       create: {
         name: ergastRace.raceName,
         round: Number(ergastRace.round),

@@ -3,7 +3,8 @@ import {
   getChampionBySeasonsQuerySchema,
   getRaceWinnersBySeasonQuerySchema
 } from '@nextjs-expressjs-postgre-sql/shared';
-import { getChampionBySeasons, getRaceWinnersBySeason } from '../services/f1/f1.service';
+import { getChampionBySeasons, getRaceWinnersBySeason } from '../../../services/f1/f1.service';
+
 
 export const getChampionBySeasonsController = async (
   req: Request,
