@@ -4,15 +4,48 @@
 
 @layer base {
   :root {
-    --theme-egg-shell: #f7f4f1;
+    --menu-height:75px;
+
+    --background: #f7f4f1;
+    --content: #ffffff;
+    --content-foreground: #000000;
+    --primary:#e10600;
+    --primary-foreground:#ffffff;
+    --secondary: #f3f3f3;
+    --secondary-foreground:#ffffff
+
   }
 
   html,
   body {
-    height: 100%;
-    max-height: 100%;
+    font-size: 1rem;
+    line-height: 1;
     font-family: 'Titillium Web', sans-serif;
-    background-color: var(--theme-egg-shell);
+  }
+
+  table > thead > tr > th,
+  table > tbody > tr > td{
+    padding:1rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .section{
+    min-height: calc(100vh - var(--menu-height));
+  }
+
+  .menu-height{
+    height:var(--menu-height);
   }
 
   .font-formula-one-black {

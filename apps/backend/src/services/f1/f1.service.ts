@@ -1,4 +1,4 @@
-import prisma from '../../integrations/prisma';
+import {prisma} from '../../integrations/prisma';
 import {
   createMissingSeasonFromErgastSeason,
   getMissingErgastSeasonWithSeasonRaces,
@@ -7,19 +7,24 @@ import {
   upsertSeasonRaces,
 } from './f1.utils';
 import { getOrLockAndExecute } from '../../utils/concurrency/code-block-lock.util';
-import { SortOrder } from '../../integrations/prisma/generated/internal/prismaNamespace';
+import {
+  Prisma, SeasonWithChampionAndConstructorEntity,
+  seasonWithChampionAndConstructorQuery, SeasonWithRacesEntity,
+  seasonWithRacesQuery
+} from '@nextjs-expressjs-postgre-sql/shared';
 
 export const getChampionBySeasons = async (
   startYear: number,
   endYear?: number
-) => {
+):Promise<SeasonWithChampionAndConstructorEntity[]> => {
   endYear = endYear ?? new Date().getFullYear() - 1;
 
-  const getSeasons = async () => await prisma.season.findMany({
-    where: { year: { gte: startYear, lte: endYear } },
-    include: { champion: true, championConstructor: true },
-    orderBy:{year:SortOrder.asc}
-  });
+  const getSeasons = async () =>
+    await prisma.season.findMany({
+      where: { year: { gte: startYear, lte: endYear } },
+      ...seasonWithChampionAndConstructorQuery,
+      orderBy: { year: Prisma.SortOrder.asc },
+    });
 
   let seasons = await getSeasons();
 
@@ -52,14 +57,16 @@ export const getChampionBySeasons = async (
   return seasons;
 };
 
-export const getRaceWinnersBySeason = async (seasonYear: number) => {
-  const getSeason = async () => await prisma.season.findUnique({
-    where: { year: seasonYear },
-    include: { champion: true, championConstructor: true, races: true },
-  });
+export const getRaceWinnersBySeason = async (seasonYear: number):Promise<SeasonWithRacesEntity | null> => {
+  const getSeason = async () =>
+    await prisma.season.findUnique({
+      where: { year: seasonYear },
+      ...seasonWithRacesQuery
+    });
+
   const season = await getSeason();
 
-  if(season && season.races.length > 0) {
+  if (season && season.races.length > 0) {
     return season;
   }
 

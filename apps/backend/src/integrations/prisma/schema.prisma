@@ -1,11 +1,11 @@
 generator client {
   provider               = "prisma-client"
   binaryTargets          = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
-  output                 = "./generated"
+  output                 = "../../../../../libs/shared/src/prisma/generated"
   runtime                = "nodejs"
   moduleFormat           = "cjs"
   generatedFileExtension = "ts"
-  importFileExtension    = "ts"
+  importFileExtension    = ""
 }
 
 datasource db {

@@ -1,13 +1,13 @@
 model Season {
-  id                    String      @id @default(uuid())
-  year                  Int         @unique
+  id                    String          @id @default(uuid())
+  year                  Int             @unique
   championId            String
-  champion              Driver      @relation("ChampionDriver", fields: [championId], references: [id])
+  champion              Driver          @relation("ChampionDriver", fields: [championId], references: [id])
   championConstructorId String
-  championConstructor   Constructor @relation("ChampionConstructor", fields: [championConstructorId], references: [id])
+  championConstructor   TeamConstructor @relation("ChampionConstructor", fields: [championConstructorId], references: [id])
   races                 Race[]
-  createdAt             DateTime    @default(now())
-  updatedAt             DateTime    @updatedAt
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
 }
 
 model Race {
@@ -22,10 +22,10 @@ model Race {
   winnerId            String
   winnerConstructorId String
 
-  circuit           Circuit     @relation(fields: [circuitId], references: [id])
-  winner            Driver      @relation("RaceWinner", fields: [winnerId], references: [id])
-  winnerConstructor Constructor @relation("WinnerConstructor", fields: [winnerConstructorId], references: [id])
-  season            Season      @relation(fields: [seasonId], references: [id])
+  circuit           Circuit         @relation(fields: [circuitId], references: [id])
+  winner            Driver          @relation("RaceWinner", fields: [winnerId], references: [id])
+  winnerConstructor TeamConstructor @relation("WinnerConstructor", fields: [winnerConstructorId], references: [id])
+  season            Season          @relation(fields: [seasonId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -61,7 +61,7 @@ model Location {
   @@unique([lat, long])
 }
 
-model Constructor {
+model TeamConstructor {
   id            String @id @default(uuid())
   constructorId String @unique
   name          String @unique

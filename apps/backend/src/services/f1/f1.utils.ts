@@ -3,7 +3,7 @@ import {
   getSeasonResults,
 } from '../../integrations/ergast/ergast.service';
 import { DriverStandingModel } from '../../integrations/ergast/models/driver-standing.model';
-import prisma from '../../integrations/prisma';
+import {prisma} from '../../integrations/prisma';
 import { StandingModel } from '../../integrations/ergast/models/standing.model';
 import { DriverModel } from '../../integrations/ergast/models/driver.model';
 import { ConstructorModel } from '../../integrations/ergast/models/constructor.model';
@@ -27,7 +27,7 @@ export const getMissingErgastSeasonsWithSeasonRaces = async (
   missingYears: number[]
 ) => {
   const ergastDriverStandings = (await getDriverStandings(startYear, endYear))
-    .MRData.StandingsTable.StandingsLists;
+    .MRData.StandingsTable.StandingsLists.filter(seasons => missingYears.includes(Number(seasons.season)));
 
   if (ergastDriverStandings.length !== missingYears.length) {
     throw new Error(
@@ -68,7 +68,7 @@ export const createMissingSeasonFromErgastSeason = async (
   }
 
   const savedDriver = await upsertDriver(driver);
-  const savedConstructor = await upsertConstructor(constructor);
+  const savedConstructor = await upsertTeamConstructor(constructor);
 
   return await safeUpsertOrFindUnique(prisma.season, {
     where: {
@@ -104,8 +104,8 @@ export const upsertDriver = (ergastDriver: DriverModel) =>
     },
   });
 
-export const upsertConstructor = (ergastConstructor: ConstructorModel) =>
-  safeUpsertOrFindUnique(prisma.constructor, {
+export const upsertTeamConstructor = (ergastConstructor: ConstructorModel) =>
+  safeUpsertOrFindUnique(prisma.teamConstructor, {
     where: {
       constructorId: ergastConstructor.constructorId,
     },
@@ -195,7 +195,7 @@ export const upsertSeasonRaces = async (
       ergastRaceCircuit
     );
     const savedDriver = await upsertDriver(ergastRaceWinnerDriver);
-    const savedConstructor = await upsertConstructor(
+    const savedConstructor = await upsertTeamConstructor(
       ergastRaceWinnerDriverConstructor
     );
 

@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import {
   getChampionBySeasonsQuerySchema,
-  getRaceWinnersBySeasonQuerySchema
+  getRaceWinnersBySeasonQuerySchema,
 } from '@nextjs-expressjs-postgre-sql/shared';
-import { getChampionBySeasons, getRaceWinnersBySeason } from '../../../services/f1/f1.service';
-
+import {
+  getChampionBySeasons,
+  getRaceWinnersBySeason,
+} from '../../../services/f1/f1.service';
 
 export const getChampionBySeasonsController = async (
   req: Request,
@@ -24,7 +26,7 @@ export const getChampionBySeasonsController = async (
 
   const { startYear, endYear } = validation.data;
 
-  return res.json(await getChampionBySeasons(startYear, endYear));
+  return res.json((await getChampionBySeasons(startYear, endYear)));
 };
 
 export const getRaceWinnersBySeasonController = async (
@@ -42,6 +44,12 @@ export const getRaceWinnersBySeasonController = async (
   }
 
   const { seasonYear } = validation.data;
+  
+  const season = (await getRaceWinnersBySeason(seasonYear));
+  
+  if(!season) {
+    throw new Error('Season not found');
+  }
 
-  return res.json(await getRaceWinnersBySeason(seasonYear));
+  return res.json(season);
 };

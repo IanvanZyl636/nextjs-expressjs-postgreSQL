@@ -1,6 +1,6 @@
-import { PrismaClient } from './generated';
+import { PrismaClient } from '@nextjs-expressjs-postgre-sql/shared';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 export const initializeDB = async (): Promise<void> => {
   while (true) {
@@ -14,5 +14,3 @@ export const initializeDB = async (): Promise<void> => {
     }
   }
 };
-
-export default prisma;
