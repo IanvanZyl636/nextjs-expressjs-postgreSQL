@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    REGISTRY = 'myregistry.local'
+    REGISTRY = 'docker-registery.local'
     BASE_IMAGE = 'nx-builder-base'
     NEXT_IMAGE = "${REGISTRY}/next-app:latest"
     EXPRESS_IMAGE = "${REGISTRY}/express-app:latest"
@@ -19,7 +19,7 @@ pipeline {
       steps {
         script {
           sh '''
-            docker build -f Dockerfile.builder-base -t $BASE_IMAGE .
+            docker build -f ./docker/app/Dockerfile.builder-base -t $BASE_IMAGE .
           '''
         }
       }
