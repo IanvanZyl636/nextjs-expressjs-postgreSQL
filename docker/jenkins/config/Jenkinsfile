@@ -15,11 +15,16 @@ pipeline {
       }
     }
 
-    stage('Build Nx Base Image') {
+    stage('DB setup') {
       steps {
         script {
           sh '''
-            docker build -f ./docker/app/Dockerfile.builder-base -t $BASE_IMAGE .
+            npm run prisma:migrate
+          '''
+        },
+        script {
+          sh '''
+            npm run prisma:reset:force
           '''
         }
       }
