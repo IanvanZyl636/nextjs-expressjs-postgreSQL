@@ -18,11 +18,13 @@ pipeline {
     stage('DB setup') {
       steps {
         script {
-          sh '''
-            npm ci
-            npm run prisma:migrate
-            npm run prisma:reset:force
-          '''
+            sh 'npm ci'
+        }
+        script {
+            sh 'npm run prisma:migrate'
+        }
+        script {
+            sh 'npm run prisma:reset:force'
         }
       }
     }
