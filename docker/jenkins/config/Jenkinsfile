@@ -20,10 +20,6 @@ pipeline {
         script {
           sh '''
             npm run prisma:migrate
-          '''
-        },
-        script {
-          sh '''
             npm run prisma:reset:force
           '''
         }
