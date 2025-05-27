@@ -1,10 +1,64 @@
 services:
-  web:
-    container_name: "backend"
-    image: "backend"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: unless-stopped
+
+#Jenkins
+  registry:
+    container_name: "docker-registery"
+    image: registry:latest
     ports:
-      - "3333:3333"
+      - 5000:5000
+    restart: always
+    profiles: ["jenkins"]
+    volumes:
+      - ./volumes/registry_data:/var/lib/registry
+
+  jenkins:
+    container_name: "jenkins"
+    image: "jenkins"
+    build:
+      context: ./docker/jenkins
+      dockerfile: Dockerfile
+    profiles: ["jenkins"]
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./volumes/jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+#End Jenkins
+#Postgresql
+  postgresql:
+    container_name: "postgresql"
+    image: postgres:latest
+    restart: always
+    profiles: ["postgresql"]
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - ./volumes/postgresql_data:/var/lib/postgresql/data
+
+  postgresql-test:
+    container_name: "postgresql-test"
+    image: postgres:latest
+    restart: always
+    profiles: [ "jenkins" ]
+    environment:
+      POSTGRES_USER: ${TEST_DB_USER}
+      POSTGRES_PASSWORD: ${TEST_DB_PASSWORD}
+      POSTGRES_DB: ${TEST_DB_DATABASE}
+    ports:
+      - ${TEST_DB_PORT}:5432
+    volumes:
+      - ./volumes/postgresql_test_data:/var/lib/postgresql/data
+
+  adminer:
+    container_name: "adminer"
+    image: adminer
+    profiles: ["postgresql"]
+    restart: always
+    ports:
+      - 8085:8080
+#End Postgresql

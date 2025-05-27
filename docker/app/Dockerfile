@@ -3,9 +3,9 @@ FROM node:lts-slim
 WORKDIR /app
 
 # Copy package.json for prod deps (root and app if needed)
-COPY package.json package-lock.json ./
-COPY apps/backend/package.json ./apps/backend/
-COPY libs/shared/package.json ./libs/shared/
+COPY ../../package.json package-lock.json ./
+COPY ../../apps/backend/package.json ./apps/backend/
+COPY ../../libs/shared/package.json ./libs/shared/
 
 # Install only production dependencies
 RUN npm install --omit=dev

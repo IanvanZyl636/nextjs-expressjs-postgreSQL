@@ -2,11 +2,11 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-COPY jenkins/plugins.txt /usr/share/jenkins/ref/plugins.txt
+COPY config/plugins.txt /usr/share/jenkins/ref/plugins.txt
 
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
-COPY jenkins/init.groovy.d /usr/share/jenkins/ref/init.groovy.d
+COPY config/init.groovy.d /usr/share/jenkins/ref/init.groovy.d
 
 # Install Docker CLI
 RUN apt-get update && \

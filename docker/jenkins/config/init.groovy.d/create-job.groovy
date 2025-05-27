@@ -18,7 +18,7 @@ if (jenkins.getItem(jobName) == null) {
     scm.userRemoteConfigs = [new UserRemoteConfig("https://github.com/IanvanZyl636/nextjs-expressjs-postgreSQL.git", null, null, null)]
     scm.extensions = []
 
-    def definition = new CpsScmFlowDefinition(scm, "Jenkinsfile")
+    def definition = new CpsScmFlowDefinition(scm, "docker/jenkins/config/Jenkinsfile")
     definition.setLightweight(true)
 
     job.definition = definition
