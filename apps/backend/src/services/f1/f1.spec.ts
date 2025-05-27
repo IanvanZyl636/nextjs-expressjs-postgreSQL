@@ -1,5 +1,5 @@
 import { getChampionBySeasons, getRaceWinnersBySeason } from './f1.service';
-import prisma from '../../integrations/prisma';
+import {prisma} from '../../integrations/prisma';
 
 describe('getChampionBySeasons', () => {
   it('run function', async () => {
@@ -21,7 +21,7 @@ describe('getChampionBySeasons', () => {
   }, 99999);
 });
 
-fdescribe('getRaceWinnersBySeason', () => {
+describe('getRaceWinnersBySeason', () => {
   it('run function', async () => {
     try{
       await Promise.all([
