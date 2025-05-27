@@ -37,7 +37,7 @@ pipeline {
     stage('Build') {
       steps {
         script {
-            sh 'nx run-many --target=build --all'
+            sh 'npx nx run-many --target=build --all'
         }
       }
     }
@@ -45,7 +45,7 @@ pipeline {
     stage('Lint') {
       steps {
         script {
-            sh 'nx run-many --target=lint --all'
+            sh 'npx nx run-many --target=lint --all'
         }
       }
     }
@@ -53,7 +53,7 @@ pipeline {
     stage('Test') {
       steps {
         script {
-            sh 'nx run-many --target=test --all'
+            sh 'npx nx run-many --target=test --all'
         }
       }
     }
