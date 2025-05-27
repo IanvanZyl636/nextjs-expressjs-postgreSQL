@@ -19,6 +19,7 @@ pipeline {
       steps {
         script {
           sh '''
+            npm run ci
             npm run prisma:migrate
             npm run prisma:reset:force
           '''
