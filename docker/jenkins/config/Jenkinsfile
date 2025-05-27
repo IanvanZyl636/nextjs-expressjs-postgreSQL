@@ -15,11 +15,16 @@ pipeline {
       }
     }
 
+    stage(){
+      steps{
+        script {
+          sh 'npm ci'
+        }
+      }
+    }
+
     stage('DB setup') {
       steps {
-        script {
-            sh 'npm ci'
-        }
         script {
             sh 'npm run prisma:migrate'
         }
