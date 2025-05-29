@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "npx nx run-many --target=build --no-cloud --skip-nx-cach",
+    "build": "npx nx run-many --target=build --no-cloud",
     "test": "npx nx run-many --target=test --coverage --passWithNoTests --no-cloud --skip-nx-cache",
     "e2e": "npx nx run-many --target=e2e --no-cloud --skip-nx-cache",
     "lint": "npx nx run-many --target=lint --no-cloud",
