@@ -45,7 +45,7 @@ describe('Page', () => {
       expect(screen.getByText(season.year.toString())).toBeInTheDocument();
       expect(screen.getByText(season.champion.fullName)).toBeInTheDocument();
       expect(
-        screen.getByText(`${season.champion.nationality},  ss${season.championConstructor.name}`)
+        screen.getByText(`${season.champion.nationality}, ${season.championConstructor.name}`)
       ).toBeInTheDocument();
     }
   });

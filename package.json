@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "npx nx run-many --target=build --all --no-cloud",
-    "test": "npx nx run-many --target=test --all --no-cloud --coverage --clearCache --skip-nx-cache",
-    "lint": "npx nx run-many --target=lint --all --no-cloud",
+    "build": "npx nx run-many --target=build --no-cloud",
+    "test": "npx nx run-many --target=test --coverage --passWithNoTests --no-cloud",
+    "lint": "npx nx run-many --target=lint --no-cloud",
+    "local:test": "npm run prisma:reset:force:test && npm run test",
     "local:prod:start": "dotenv -e .env -- node apps/backend/dist/main.js",
     "generate:db:env": "ts-node scripts/generate-env.ts",
     "docker:start": "docker-compose -f docker/app/docker-compose.yml up -d --no-deps --build",
@@ -14,6 +15,7 @@
     "prisma:migrate": "npx prisma migrate dev --schema=apps/backend/src/integrations/prisma",
     "prisma:reset": "npx prisma migrate reset --schema=apps/backend/src/integrations/prisma",
     "prisma:reset:force": "npx prisma migrate reset --force --schema=apps/backend/src/integrations/prisma",
+    "prisma:reset:force:test": "dotenv -e .env.test -- npx prisma migrate reset --force --schema=apps/backend/src/integrations/prisma",
     "prisma:deploy": "npx prisma migrate deploy --schema=apps/backend/src/integrations/prisma",
     "prisma:seed": "npx prisma db seed --schema=apps/backend/src/integrations/prisma"
   },

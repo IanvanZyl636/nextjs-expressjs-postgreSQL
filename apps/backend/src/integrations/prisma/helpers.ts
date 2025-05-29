@@ -24,7 +24,7 @@ export async function safeUpsertOrFindUnique<
       const existingRecord = await model.findUnique({ where: args.where });
 
       if (!existingRecord)
-        throw new Error(`Race condition unable to find Unique (${args.where})`);
+        throw new Error(`Race condition unable to find Unique (${JSON.stringify(args.where)})`);
 
       return existingRecord;
     }
