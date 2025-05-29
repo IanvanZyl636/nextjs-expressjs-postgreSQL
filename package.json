@@ -6,7 +6,7 @@
     "build": "npx nx run-many --target=build --no-cloud --skip-nx-cach",
     "test": "npx nx run-many --target=test --coverage --passWithNoTests --no-cloud --skip-nx-cache",
     "e2e": "npx nx run-many --target=e2e --no-cloud --skip-nx-cache",
-    "lint": "npx nx run-many --target=lint --no-cloud --skip-nx-cach",
+    "lint": "npx nx run-many --target=lint --no-cloud",
     "local:test": "npm run prisma:reset:force:test && npm run test",
     "local:prod:start": "dotenv -e .env -- node apps/backend/dist/main.js",
     "docker:start": "docker-compose -f docker/app/docker-compose.yml up -d --no-deps --build",
