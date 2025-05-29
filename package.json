@@ -9,7 +9,7 @@
     "lint": "npx nx run-many --target=lint --no-cloud",
     "local:test": "npm run prisma:reset:force:test && npm run test",
     "local:prod:start": "dotenv -e .env -- node apps/backend/dist/main.js",
-    "docker:start": "docker-compose -f ./docker/app/docker-compose.yml up -d --no-deps --build",
+    "docker:start": "docker compose -f ./docker/app/docker-compose.yml up -d --no-deps --build",
     "docker:jenkins:start": "docker-compose --profile jenkins up -d --no-deps --build",
     "docker:postgresql:start": "docker-compose --profile postgresql up -d --no-deps --build",
     "prisma:migrate": "npx prisma migrate dev --schema=apps/backend/src/integrations/prisma",
