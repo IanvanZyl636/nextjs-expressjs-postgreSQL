@@ -63,6 +63,20 @@ pipeline {
         }
       }
     }
+
+    stage('Deploy') {
+      environment {
+        DATABASE_URL = credentials('db-conn-string')
+      }
+      steps {
+        script {
+          sh 'npm run prisma:deploy'
+        }
+        script {
+          sh 'npm run docker:start'
+        }
+      }
+    }
   }
 
   post {

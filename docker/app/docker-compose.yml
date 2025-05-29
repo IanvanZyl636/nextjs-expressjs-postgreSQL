@@ -3,7 +3,7 @@ services:
     container_name: "backend"
     image: "backend"
     build:
-      context: ../..
+      context: ./
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
