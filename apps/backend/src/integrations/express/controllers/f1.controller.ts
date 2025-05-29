@@ -16,7 +16,7 @@ export const getChampionBySeasonsController = async (
     endYear:
       req.query.endYear !== undefined ? Number(req.query.endYear) : undefined,
   };
-
+asd();
   const validation = getChampionBySeasonsQuerySchema.safeParse(parsedQuery);
 
   if (!validation.success) {
