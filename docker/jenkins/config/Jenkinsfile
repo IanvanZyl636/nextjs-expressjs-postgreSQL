@@ -31,9 +31,6 @@ pipeline {
         script {
             sh 'npm run prisma:deploy'
         }
-        script {
-            sh 'npm run prisma:reset:force'
-        }
       }
     }
 
