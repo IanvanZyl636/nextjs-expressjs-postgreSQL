@@ -31,8 +31,7 @@ export default async function Index() {
                       {season.champion.fullName}
                     </div>
                     <div className={'text-lg'}>
-                      {season.champion.nationality},{' '}
-                      {season.championConstructor.name}
+                      {season.champion.nationality}, {season.championConstructor.name}
                     </div>
                   </div>
                 </div>

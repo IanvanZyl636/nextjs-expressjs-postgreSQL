@@ -15,7 +15,7 @@ module.exports = {
       tsConfig: isDevelopModeEnabled ? './tsconfig.dev.json' : './tsconfig.app.json',
       generatePackageJson: true,
       sourceMap: isDevelopModeEnabled,
-      outputHashing: !isDevelopModeEnabled ? 'all' : 'none',
+      outputHashing: 'none',
       optimization: !isDevelopModeEnabled
     }),
   ],

@@ -3,8 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "types": ["node", "express"],
-    "rootDir": "src",
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+    "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
   "exclude": [

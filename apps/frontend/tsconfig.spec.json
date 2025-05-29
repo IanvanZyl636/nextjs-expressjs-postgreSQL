@@ -3,9 +3,12 @@
   "compilerOptions": {
     "outDir": "./out-tsc/jest",
     "jsx": "preserve",
-    "types": ["jest", "node"],
+    "types": ["jest", "node", "@testing-library/jest-dom"],
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": [
     "jest.config.ts",

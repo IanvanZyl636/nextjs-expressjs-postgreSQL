@@ -9,7 +9,7 @@ services:
     restart: always
     profiles: ["jenkins"]
     volumes:
-      - ./volumes/registry_data:/var/lib/registry
+      - registry_data:/var/lib/registry
 
   jenkins:
     container_name: "jenkins"
@@ -18,13 +18,12 @@ services:
       context: ./docker/jenkins
       dockerfile: Dockerfile
     profiles: ["jenkins"]
-    environment:
-      DATABASE_URL: ${TEST_DATABASE_URL}
+    restart: always
     ports:
       - 8080:8080
       - 50000:50000
     volumes:
-      - ./volumes/jenkins_data:/var/jenkins_home
+      - jenkins_data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
 
   postgresql-test:
@@ -39,7 +38,7 @@ services:
     ports:
       - ${TEST_DB_PORT}:5432
     volumes:
-      - ./volumes/postgresql_test_data:/var/lib/postgresql/data
+      - postgresql_test_data:/var/lib/postgresql/data
 #End Jenkins
 #Postgresql
   postgresql:
@@ -54,13 +53,19 @@ services:
     ports:
       - ${DB_PORT}:5432
     volumes:
-      - ./volumes/postgresql_data:/var/lib/postgresql/data
+      - postgresql_data:/var/lib/postgresql/data
 
   adminer:
     container_name: "adminer"
     image: adminer
-    profiles: ["postgresql"]
+    profiles: ["postgresql", "jenkins"]
     restart: always
     ports:
       - 8085:8080
 #End Postgresql
+
+volumes:
+  postgresql_data:
+  postgresql_test_data:
+  jenkins_data:
+  registry_data:

@@ -5,6 +5,7 @@ dist
 tmp
 out-tsc
 .env
+.env.test
 
 # dependencies
 node_modules
@@ -45,6 +46,7 @@ Thumbs.db
 .nx/cache
 .nx/workspace-data
 volumes
+volumes/**/*
 
 # Next.js
 .next

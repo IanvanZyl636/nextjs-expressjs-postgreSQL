@@ -1,3 +1,4 @@
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   displayName: '@nextjs-expressjs-postgre-sql/frontend',
@@ -8,4 +9,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: 'test-output/jest/coverage',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
 };

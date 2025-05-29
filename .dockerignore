@@ -1,0 +1,7 @@
+volumes
+.nx
+.idea
+node_modules
+**/*/dist
+**/*/.next
+docker

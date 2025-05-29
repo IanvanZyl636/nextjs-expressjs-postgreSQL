@@ -4,8 +4,7 @@
     "outDir": "dist",
     "types": ["node", "express"],
     "rootDir": "src",
-    "sourceMap": true,
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+    "sourceMap": true
   },
   "include": ["src/**/*.ts"],
   "exclude": [
