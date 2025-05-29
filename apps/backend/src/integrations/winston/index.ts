@@ -1,5 +1,5 @@
 import { createLogger, format, transports, Logger } from 'winston';
-import prisma from '../prisma';
+import {prisma} from '../prisma';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const logFormat = format.printf(({ level, message, timestamp }) => {

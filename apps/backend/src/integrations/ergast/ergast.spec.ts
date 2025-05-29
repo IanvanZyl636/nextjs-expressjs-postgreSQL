@@ -1,6 +1,6 @@
 import { getDriverStandingsLimitOffset } from './ergast.utils';
-import { getDriverStandings, getSeasonResults } from './ergast.service';
 import axios from 'axios';
+import { ErgastService } from './ergast.service';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -21,7 +21,7 @@ describe('ergast service', () => {
       },
     });
 
-    const result = await getDriverStandings(2023);
+    const result = await ErgastService.getDriverStandings(2023);
     expect(result.MRData.StandingsTable.StandingsLists[0].season).toBe('2023');
     expect(mockedAxios.get).toHaveBeenCalledWith(
       expect.stringContaining('/driverStandings/1.json')
@@ -40,7 +40,7 @@ describe('ergast service', () => {
       },
     });
 
-    const result = await getSeasonResults(2023);
+    const result = await ErgastService.getSeasonResults(2023);
     expect(result.MRData.RaceTable.season).toBe('2023');
     expect(mockedAxios.get).toHaveBeenCalledWith(
       'https://ergast.com/api/f1/2023/results/1.json'

@@ -1,4 +1,5 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
+const ForkTsCheckerWebpackPlugin  = require('fork-ts-checker-webpack-plugin');
 const { join } = require('path');
 
 const isDevelopModeEnabled = !!(process.env['DEVELOPMODE']);
@@ -17,6 +18,11 @@ module.exports = {
       sourceMap: isDevelopModeEnabled,
       outputHashing: 'none',
       optimization: !isDevelopModeEnabled
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: isDevelopModeEnabled ? './tsconfig.dev.json' : './tsconfig.app.json',
+      },
     }),
   ],
 };

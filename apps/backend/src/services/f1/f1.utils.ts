@@ -1,6 +1,5 @@
 import {
-  getDriverStandings,
-  getSeasonResults,
+  ErgastService
 } from '../../integrations/ergast/ergast.service';
 import { DriverStandingModel } from '../../integrations/ergast/models/driver-standing.model';
 import {prisma} from '../../integrations/prisma';
@@ -26,7 +25,7 @@ export const getMissingErgastSeasonsWithSeasonRaces = async (
   endYear: number,
   missingYears: number[]
 ) => {
-  const ergastDriverStandings = (await getDriverStandings(startYear, endYear))
+  const ergastDriverStandings = (await ErgastService.getDriverStandings(startYear, endYear))
     .MRData.StandingsTable.StandingsLists.filter(seasons => missingYears.includes(Number(seasons.season)));
 
   if (ergastDriverStandings.length !== missingYears.length) {
@@ -43,7 +42,7 @@ export const getMissingErgastSeasonsWithSeasonRaces = async (
 export const getMissingErgastSeasonWithSeasonRaces = async (
   seasonYear: number
 ) => {
-  const ergastSeason = (await getDriverStandings(seasonYear, seasonYear))
+  const ergastSeason = (await ErgastService.getDriverStandings(seasonYear, seasonYear))
     ?.MRData?.StandingsTable?.StandingsLists?.[0];
 
   if (!ergastSeason) {
@@ -160,7 +159,7 @@ export const upsertSeasonRaces = async (
   seasonId: string,
   seasonYear: number
 ) => {
-  const ergastSeasonRaces = (await getSeasonResults(seasonYear)).MRData
+  const ergastSeasonRaces = (await ErgastService.getSeasonResults(seasonYear)).MRData
     .RaceTable.Races;
 
   for (const ergastRace of ergastSeasonRaces) {
