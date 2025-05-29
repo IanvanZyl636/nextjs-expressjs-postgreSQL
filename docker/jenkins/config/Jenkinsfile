@@ -29,18 +29,10 @@ pipeline {
       }
       steps {
         script {
-            sh 'npm run prisma:migrate'
+            sh 'npm run prisma:deploy'
         }
         script {
             sh 'npm run prisma:reset:force'
-        }
-      }
-    }
-
-    stage('Build') {
-      steps {
-        script {
-            sh 'npm run build'
         }
       }
     }
@@ -49,6 +41,14 @@ pipeline {
       steps {
         script {
             sh 'npm run lint'
+        }
+      }
+    }
+
+    stage('Build') {
+      steps {
+        script {
+            sh 'npm run build'
         }
       }
     }
@@ -66,6 +66,9 @@ pipeline {
   }
 
   post {
+    always {
+      cleanWs()
+    }
     failure {
       echo 'Build failed!'
     }
