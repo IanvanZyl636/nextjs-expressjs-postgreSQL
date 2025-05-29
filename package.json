@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npx nx run-many --target=build --all --no-cloud",
-    "test": "npx nx run-many --target=test --all --no-cloud --coverage --clearCache",
+    "test": "npx nx run-many --target=test --all --no-cloud --coverage --clearCache --skip-nx-cache",
     "lint": "npx nx run-many --target=lint --all --no-cloud",
     "local:prod:start": "dotenv -e .env -- node apps/backend/dist/main.js",
     "generate:db:env": "ts-node scripts/generate-env.ts",
