@@ -96,7 +96,6 @@ services:
     profiles: [ "frontend", "postgresql" ]
     environment:
       - TUNNEL_TOKEN=${CLOUD_FLARE_TUNNEL_TOKEN}
-    env_file: ./.env
 
 volumes:
   postgresql_data:
