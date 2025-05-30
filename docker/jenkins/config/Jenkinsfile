@@ -68,6 +68,7 @@ pipeline {
       environment {
         DATABASE_URL = credentials('db-conn-string')
         BACKEND_DOMAIN= 'http://backend:3333'
+        CLOUD_FLARE_TUNNEL_TOKEN = credentials('cloud-flare-tunnel-token')
       }
       steps {
         script {

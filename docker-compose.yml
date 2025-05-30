@@ -88,6 +88,16 @@ services:
     ports:
       - "3000:3000"
 
+  cloudflare:
+    container_name: regency-group-cloudflare
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    restart: unless-stopped
+    profiles: [ "frontend", "postgresql" ]
+    environment:
+      - TUNNEL_TOKEN=${CLOUD_FLARE_TUNNEL_TOKEN}
+    env_file: ./.env
+
 volumes:
   postgresql_data:
   postgresql_test_data:
