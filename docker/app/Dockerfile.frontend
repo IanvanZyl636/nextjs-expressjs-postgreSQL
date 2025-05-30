@@ -1,0 +1,17 @@
+FROM node:lts-slim
+
+WORKDIR /app
+
+COPY ./package.json ./package-lock.json ./
+COPY ./apps/frontend/package.json ./apps/frontend/
+COPY ./libs/shared/package.json ./libs/shared/
+
+RUN npm install --omit=dev
+
+COPY ./apps/frontend/.next ./apps/frontend/.next
+COPY ./apps/frontend/public ./apps/frontend/public
+COPY ./libs/shared/dist ./libs/shared/dist
+
+ENV NODE_ENV=production
+
+CMD ["npm", "run", "start:frontend"]

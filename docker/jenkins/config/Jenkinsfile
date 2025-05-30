@@ -67,13 +67,17 @@ pipeline {
     stage('Deploy') {
       environment {
         DATABASE_URL = credentials('db-conn-string')
+        BACKEND_DOMAIN= 'http://backend:3333'
       }
       steps {
         script {
           sh 'npm run prisma:deploy'
         }
         script {
-          sh 'npm run docker:start'
+          sh 'npm run docker:backend:start'
+        }
+        script {
+          sh 'npm run docker:frontend:start'
         }
       }
     }

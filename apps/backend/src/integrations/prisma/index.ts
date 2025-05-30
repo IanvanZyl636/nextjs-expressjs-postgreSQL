@@ -6,6 +6,7 @@ export const initializeDB = async (): Promise<void> => {
   while (true) {
     try {
       await prisma.$connect();
+
       console.log('✅  Connected to the database.');
       break;
     } catch {

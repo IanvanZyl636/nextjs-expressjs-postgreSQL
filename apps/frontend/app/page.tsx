@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default async function Index() {
   const seasons: SeasonWithChampionAndConstructorEntity[] = await (
-    await fetch('http://localhost:3333/api/seasons/champions?startYear=2005', {
+    await fetch(`${process.env.BACKEND_DOMAIN}/api/seasons/champions?startYear=2005`, {
       cache: 'force-cache',
     })
   )?.json();
