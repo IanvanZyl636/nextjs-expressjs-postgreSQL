@@ -14,7 +14,7 @@ export default async function Index() {
       <div className={'container max-md:p-0 mx-auto'}>
         <div className={'bg-content section p-8'}>
           <H1 className={'mb-8'}>Season World Champions</H1>
-          <div className={'grid grid-cols-4 max-md:grid-cols-2 gap-8'}>
+          <div className={'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'}>
             {seasons.map((season, index) => (
               <Link
                 key={`card-${index}`}
