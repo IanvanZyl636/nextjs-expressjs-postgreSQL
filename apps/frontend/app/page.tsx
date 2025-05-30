@@ -22,7 +22,7 @@ export default async function Index() {
               >
                 <div
                   className={
-                    'p-4 rounded-lg shadow-md text-content-foreground bg-content hover:text-content hover:bg-content-foreground cursor-pointer'
+                    'p-4 rounded-lg shadow-md h-full text-content-foreground bg-content hover:text-content hover:bg-content-foreground cursor-pointer'
                   }
                 >
                   <div className={'flex flex-col text-center'}>
