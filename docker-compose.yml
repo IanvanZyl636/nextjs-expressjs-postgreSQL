@@ -20,8 +20,8 @@ services:
     profiles: ["jenkins"]
     restart: always
     environment:
-      DB_CONN_STRING: postgresql://${DB_USER}:${DB_PASSWORD}@postgresql:${DB_PORT}/${DB_DATABASE}
-      TEST_DB_CONN_STRING: postgresql://${TEST_DB_USER}:${TEST_DB_PASSWORD}@postgresql-test:${TEST_DB_PORT}/${TEST_DB_DATABASE}
+      DB_CONN_STRING: postgresql://${DB_USER}:${DB_PASSWORD}@postgresql:5432/${DB_DATABASE}
+      TEST_DB_CONN_STRING: postgresql://${TEST_DB_USER}:${TEST_DB_PASSWORD}@postgresql-test:5432/${TEST_DB_DATABASE}
     ports:
       - 8080:8080
       - 50000:50000
@@ -39,7 +39,7 @@ services:
       POSTGRES_PASSWORD: ${TEST_DB_PASSWORD}
       POSTGRES_DB: ${TEST_DB_DATABASE}
     ports:
-      - ${TEST_DB_PORT}:${TEST_DB_PORT}
+      - ${TEST_DB_PORT}:5432
     volumes:
       - postgresql_test_data:/var/lib/postgresql/data
 #End Jenkins
@@ -54,7 +54,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - ${DB_PORT}:5432
     volumes:
       - postgresql_data:/var/lib/postgresql/data
 
