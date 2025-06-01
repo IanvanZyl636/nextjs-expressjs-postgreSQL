@@ -1,13 +1,6 @@
 pipeline {
   agent any
 
-  environment {
-    REGISTRY = 'docker-registery.local'
-    BASE_IMAGE = 'nx-builder-base'
-    NEXT_IMAGE = "${REGISTRY}/next-app:latest"
-    EXPRESS_IMAGE = "${REGISTRY}/express-app:latest"
-  }
-
   stages {
     stage('Checkout') {
       steps {
@@ -25,7 +18,7 @@ pipeline {
 
     stage('DB setup') {
       environment {
-        DATABASE_URL = credentials('test-db-conn-string')
+        DATABASE_URL = env.TEST_DB_CONN_STRING
       }
       steps {
         script {
@@ -55,7 +48,7 @@ pipeline {
 
     stage('Test') {
       environment {
-        DATABASE_URL = credentials('test-db-conn-string')
+        DATABASE_URL = env.TEST_DB_CONN_STRING
       }
       steps {
         script {
@@ -66,9 +59,8 @@ pipeline {
 
     stage('Deploy') {
       environment {
-        DATABASE_URL = credentials('db-conn-string')
+        DATABASE_URL = env.DB_CONN_STRING
         BACKEND_DOMAIN= 'http://backend:3333'
-        CLOUD_FLARE_TUNNEL_TOKEN = credentials('cloud-flare-tunnel-token')
       }
       steps {
         script {
