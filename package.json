@@ -11,7 +11,7 @@
     "start:backend": "node apps/backend/dist/main.js",
     "local:test": "npm run prisma:reset:force:test && npm run test",
     "local:prod:start": "dotenv -e .env -- node apps/backend/dist/main.js",
-    "docker:start": "docker compose --profile frontend --profile backend --profile jenkins --profile postgresql up -d --no-deps --build",
+    "docker:start": "docker compose --profile jenkins --profile postgresql up -d --no-deps --build",
     "docker:frontend:start": "docker compose --profile frontend up -d --no-deps --build",
     "docker:backend:start": "docker compose --profile backend up -d --no-deps --build",
     "docker:jenkins:start": "docker-compose --profile jenkins up -d --no-deps --build",

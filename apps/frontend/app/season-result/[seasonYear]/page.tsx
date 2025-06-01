@@ -12,7 +12,7 @@ export default async function SeasonResult({
 
   const season: SeasonWithRacesEntity = await (
     await fetch(
-      `${process.env.BACKEND_DOMAIN}/api/season/race-winners?seasonYear=${seasonYear}`,
+      `${process.env.BACKEND_DOMAIN ?? 'localhost:3333'}/api/season/race-winners?seasonYear=${seasonYear}`,
       {
         cache: 'force-cache',
       }
