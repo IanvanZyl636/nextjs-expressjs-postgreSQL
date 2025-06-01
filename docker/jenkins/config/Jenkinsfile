@@ -18,7 +18,7 @@ pipeline {
 
     stage('DB setup') {
       environment {
-        DATABASE_URL = ${TEST_DB_CONN_STRING}
+        DATABASE_URL = "${TEST_DB_CONN_STRING}"
       }
       steps {
         script {
@@ -48,7 +48,7 @@ pipeline {
 
     stage('Test') {
       environment {
-        DATABASE_URL = ${TEST_DB_CONN_STRING}
+        DATABASE_URL = "${TEST_DB_CONN_STRING}"
       }
       steps {
         script {
@@ -59,7 +59,7 @@ pipeline {
 
     stage('Deploy') {
       environment {
-        DATABASE_URL = ${DB_CONN_STRING}
+        DATABASE_URL = "${DB_CONN_STRING}"
         BACKEND_DOMAIN= 'http://backend:3333'
       }
       steps {
