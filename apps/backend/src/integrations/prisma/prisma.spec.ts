@@ -1,5 +1,3 @@
-import {Prisma} from '@nextjs-expressjs-postgre-sql/shared';
-import { safeUpsertOrFindUnique } from './helpers';
 import { initializeDB, prisma } from './index';
 
 jest.mock('@nextjs-expressjs-postgre-sql/shared', () => {

@@ -64,13 +64,7 @@ pipeline {
       }
       steps {
         script {
-          sh 'npm run prisma:deploy'
-        }
-        script {
-          sh 'npm run docker:backend:start'
-        }
-        script {
-          sh 'npm run docker:frontend:start'
+          sh 'npm run docker:start'
         }
         script {
           def cloudflareTokenId = 'cloud-flare-tunnel-token'

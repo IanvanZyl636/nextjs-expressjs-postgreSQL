@@ -8,7 +8,7 @@ import { DriverModel } from '../../integrations/ergast/models/driver.model';
 import { ConstructorModel } from '../../integrations/ergast/models/constructor.model';
 import { CircuitModel } from '../../integrations/ergast/models/circuit.model';
 import { LocationModel } from '../../integrations/ergast/models/location.model';
-import { safeUpsertOrFindUnique } from '../../integrations/prisma/helpers';
+import { safeUpsertOrFindUnique } from '../../integrations/prisma/prisma.utils';
 
 export function getYearsInRange(startYear: number, endYear: number) {
   const allYears: number[] = [];

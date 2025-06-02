@@ -1,4 +1,4 @@
-import { safeUpsertOrFindUnique } from './helpers';
+import { safeUpsertOrFindUnique } from './prisma.utils';
 import { Prisma } from '@nextjs-expressjs-postgre-sql/shared';
 
 describe('safeUpsertOrFindUnique', () => {

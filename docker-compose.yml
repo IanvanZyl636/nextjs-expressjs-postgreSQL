@@ -1,16 +1,4 @@
 services:
-
-#Jenkins
-  registry:
-    container_name: "docker-registery"
-    image: registry:latest
-    ports:
-      - 5000:5000
-    restart: always
-    profiles: ["jenkins"]
-    volumes:
-      - registry_data:/var/lib/registry
-
   jenkins:
     container_name: "jenkins"
     image: "jenkins"
@@ -42,13 +30,11 @@ services:
       - ${TEST_DB_PORT}:5432
     volumes:
       - postgresql_test_data:/var/lib/postgresql/data
-#End Jenkins
-#Postgresql
+
   postgresql:
     container_name: "postgresql"
     image: postgres:latest
     restart: always
-    profiles: ["postgresql", "jenkins"]
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -61,11 +47,19 @@ services:
   adminer:
     container_name: "adminer"
     image: adminer
-    profiles: ["postgresql", "jenkins"]
+    profiles: ["jenkins"]
     restart: always
     ports:
       - 8085:8080
-#End Postgresql
+
+  base-build:
+    image: "builder-base"
+    build:
+      dockerfile: docker/app/Dockerfile.base-build
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - postgresql
 
   backend:
     container_name: "backend"
@@ -73,11 +67,12 @@ services:
     build:
       dockerfile: docker/app/Dockerfile.backend
     restart: unless-stopped
-    profiles: ["backend"]
     environment:
       DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3333:3333"
+    depends_on:
+      - base-build
 
   frontend:
     container_name: "frontend"
@@ -85,11 +80,12 @@ services:
     build:
       dockerfile: docker/app/Dockerfile.frontend
     restart: unless-stopped
-    profiles: [ "frontend" ]
     environment:
       BACKEND_DOMAIN: ${BACKEND_DOMAIN}
     ports:
       - "3444:3000"
+    depends_on:
+      - base-build
 
   cloudflare:
     container_name: f1-cloudflare
