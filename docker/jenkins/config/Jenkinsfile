@@ -61,6 +61,7 @@ pipeline {
       environment {
         DATABASE_URL = "${DB_CONN_STRING}"
         BACKEND_DOMAIN= 'http://backend:3333'
+        CLOUD_FLARE_TUNNEL_TOKEN = credentials('cloud-flare-tunnel-token')
       }
       steps {
         script {
@@ -71,6 +72,11 @@ pipeline {
         }
         script {
           sh 'npm run docker:frontend:start'
+        }
+        if (env.CLOUD_FLARE_TUNNEL_TOKEN?.trim()) {
+            sh 'npm run docker:cloudflare:start'
+        } else {
+            echo 'Skipping Cloudflare tunnel start: no token provided.'
         }
       }
     }

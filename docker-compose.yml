@@ -91,14 +91,14 @@ services:
     ports:
       - "3000:3000"
 
-#  cloudflare:
-#    container_name: f1-cloudflare
-#    image: cloudflare/cloudflared:latest
-#    command: tunnel run
-#    restart: unless-stopped
-#    profiles: [ "frontend" ]
-#    environment:
-#      - TUNNEL_TOKEN=${CLOUD_FLARE_TUNNEL_TOKEN}
+  cloudflare:
+    container_name: f1-cloudflare
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    restart: unless-stopped
+    profiles: [ "cloudflare" ]
+    environment:
+      - TUNNEL_TOKEN=${CLOUD_FLARE_TUNNEL_TOKEN}
 
 volumes:
   postgresql_data:
