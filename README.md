@@ -1,74 +1,266 @@
-# High‑level architecture & trade‑offs.
-The idea behind the entire mono repo was to offer a near free fully selfhostable distributable ready, low boilerplate full stack application. This includes that the application and DB is structured in a way to facilitate multiple instances and for the DB to deal and eliminate race conditions also the tests are structured to spin up a test DB for the CI/CD to test against a running test DB. 
+# 🏗️ High-Level Architecture & Trade-Offs
 
-The backend and db is not publically exposed only the frontend is exposed, and the frontend utilizes the docker network to communicate with the different services like frontend to backend and backend to db. You can easily expose the backend if the need arises because it is on a seperate docker container.
+This monorepo was designed to offer a **fully self-hostable**, **low-boilerplate**, **distributable-ready**, and **free full-stack application** (only requiring a domain name). No paid cloud services are used—**only Cloudflare Tunnel**, which is free.
 
-My stack of choice was:
-* Expressjs for the BE
-* Prisma for the DB abstraction and ORM solution
-* Postgresql because it is the most popular DB at the moment but with prisma I could easily interchange between prisma's supported DBs ([Prisma supported DBs](https://www.prisma.io/docs/orm/reference/supported-databases))
-* Nextjs for the incremental server side rendering
-* Mono repo for me to share the generated Prisma models with my FE and BE
-* Jenkins opensource CI/CD
+The application and database architecture support **multi-instance deployment**, with built-in handling for **race conditions** in a distributed environment. The test suite spins up a test database during CI/CD to validate concurrent access handling with zero error tolerance.
 
-## Prisma / Postgresql DB
-You can check out my DB structure by navigating to apps/backend/integrations/prisma/models this contains all the prisma models that prisma will use to create the tables, relationships and columns. You use the command <code>npm run prisma:migrate</code> this will convert and apply all the model changes to your DB it will also generate the types and models for your apps to use also it generates a migration file that will be included in your git repo and have version control. The <code>npm run prisma:deploy</code> command is used to apply your migrations onto a DB without creating more migrations. There is also <code>npm run prisma:reset</code> which will reset your connected DB to your existing migrations and also clear out all data from the DB. I used prisma mainly for the DB abstraction it provides aswell as the generation of types which reduces alot of the boilerplate involved for a BE app.
+Only the **frontend is publicly exposed**, while the backend and database are isolated within a Docker network. Internal services communicate via Docker networking. If necessary, the backend can be exposed externally since it runs in a separate container.
 
-## Backend Expressjs
-With my BE I have neatly scaffolded the directories for easy identification of what has been implemented on the app and where their coupling ends. So for each library or api I have a integrations directory and then their name as a example integrations/express, then you know everything express related is in that directory.
+---
 
-My list of integrations:
-* ergast for the F1 API we need to query
-* express for the generate API setup and CRUD calls (GET, POST, DELETE)
-* prisma for the *.prisma models which are then translated into tables through the use of the command prisma migrate which will apply all the models found onto the DB that you connected with via DATABASE_URL enviromental variable. It also has a connection command for when the app starts it will try and connect to DB and retry every 3 seconds on failure. It also has helpers like safeUpsertOrFindUnique which is a function wrapper for any upsert to deal with race conditions with parralel execution onto the DB this is essential for distributed systems.
-* swagger for automatic openAPI and documentation generation based off of the @swagger comments in the integrations/express/routers
-* winston for advance logging of errors. This uses a middleware on express to log all errors in the console, file and in DB for easy debugging.
+## 💻 Tech Stack
 
-Other than the integrations layer I have a services layer. This is where the business logic lays. For each business concern there is a directory with the actual *.service.ts file which is intended to be the main access point for using the service, the service is also wrapped with a class this is to make it easier to mock out the service with unit testing. The service has a *.utils.ts file that is used to seperate different concerns for the service, doing it this way makes the service functions easy to read and you also have the option to test individual util functions to deep dive on issues.
+- **Backend:** Express.js
 
-I do not have a data layer because prisma takes care of the data layer concerns.
+- **Frontend:** Next.js (Incremental Static Site Generation)
+- **Shared Library:** Prisma models, Zod schemas, and constants
+- **ORM:** Prisma + PostgreSQL
+- **DB:** PostgreSQL
+- **Mono Repo:** For fast project setup and run commands
+- **CI/CD:** Jenkins (Open Source)
 
-The app has a main.ts this is the primary entry point for the BE server and the functions that are inside are self explanitory.
+> PostgreSQL was chosen due to its popularity, but thanks to Prisma, you can easily switch to any [supported database](https://www.prisma.io/docs/orm/reference/supported-databases).
 
-The Backend has low boilerplate requirements because you do not have to deal with DTO and viewmodels mapping. The idea is that you specify the query in the shared lib folder then it would defer a model based off of the query and then you use that defered model for both BE and FE. So you do not have to use a DTO to viewmodel mapper. That already saves a lot of boiler plate required to just do basic data fetching commands. The added bonus is that if you change the query it will automatically change the defered model which will cause build error on either the BE or FE ensuring you catch issues far before it reaches your deployment.
+---
 
-If you expose the backend and there are thirdparties using your API they can simply ingest the <code>/swagger.json</code> which is a openAPI spec and can be used to automatically generate the BE server integration for them using tools like <code>@openapitools/openapi-generator-cli</code> on the FE. 
+## ⚖️ Trade-Offs
 
-For testing I am using jest which will use a live docker DB the test DB connection string can be specified in the <code>.env.test</code> file if you are running two seperate DBs on local. But by default the Jenkins CI/CD will use a test DB which it clears out after each run. 
+### 1. Docker & Build Pipeline
 
-How I am approaching the ergast integration is I am exposing two functions in my service layer <code>getChampionBySeasons(startYear, endYear?)</code> and <code>getRaceWinnersBySeason(seasonYear)</code> 
+To support `docker-compose up` (running DB, FE, and BE), the app must be built **twice**—once in the CI pipeline to test the build and again in `docker-compose` to generate the FE and BE images, there are ways around this but this was last on my list and used my time on different concerns. Ideally, I would assign profiles to the different services to allow me to run individual services from the same `docker-compose.yml` file, given the freedom to structure the build in the most efficient way.
 
-The <code>getChampionBySeasons</code> will check the DB if the year range exists if there are gaps it will identify which years are missing and invoke a ergast API call <code>{ergastRootApi}/driverStandings/1.json?limit={limit}&offset={offset}</code> and get the season data and champion driver with the champion driver constructor, and upsert it in my DB it will not get the races for the season because this is not needed for the landing page and it slows the initial response down because it must make another api call for each season to get that seasons result. If the function is called and all the seasons exist in my DB for the given year range there is no ergast API call.
+### 2. End-to-End Testing
 
-For a individual season it will invoke the <code>getRaceWinnersBySeason(seasonYear)</code> function here I am checking if a season exists on the DB and if it has the races for that season. If it does not have the season it will invoke 2 ergast API calls <code>{ergastRootApi}/driverStandings/1.json?limit={limit}&offset={offset}</code> and <code>{ergastRootApi}/{year}/results/1.json</code> the one to get the season data and the other call to get the results of that season for me to upsert the races and results into my DB. If the season already exists in my DB without races it will only call 1 ergast api and upsert the races for that season in my DB. If the season exists and does have races attached it will not call the ergast api
+Although the system is **structured for e2e testing**, time constraints meant implementation is still pending.
 
-For both service functions when they upsert meaning they are actually going to insert or update data I am using a util function wrapper <code>getOrLockAndExecute</code> which will take a key and function to be locked. This locking takes place to deal with simutanious calls to the same service at once and they both try and upsert then this will take the first call and lock the block and any susiquent calls will wait for the block to complete and use the same result.  With this I am catering for distrubeted systems meaing you are hosing multiple containers to deal with the api call load and horizontally scale the BE. So the performance you gain is for read functionality it will execute the reads individually without blocking and for writes it will make it one sigular call to deal with race conditions. 
+---
 
-Further more I have implemented <code>safeUpsertOrFindUnique</code> prisma util wrapper. Which this wrapper it is intented to wrap you upserts if you know that it won't be syncronisly executed and that if a race condition should occur it will simpley query the DB instead of trying to insert or update.
+## ✅ Testing & Linting
 
-## Frontend Nextjs
-I used nextjs for my frontend because it provided a full solutioning for FE including SSR or in my case I am using ISSR(incremental server side rendering). The reason I am using ISSR is, only my FE is exposed and the BE and DB is hosted on the same docker network but not accessable for my FE prod build for it to fetch the data it needs to SSG (static site generation). This means each time I redeploy the FE it will not have a static version of the pages but as your users use the website it will statically generate the dynamic pages. So the next time a user navigates to the same page the server will be serving them a static page. This give you the best of both worlds having super fast load time but also having full control over the caching of the page.
+- **Linting:** ESLint (applied to FE, BE, and shared lib)
+- **Testing:** Jest with TDD for backend services
+- **Coverage:** 70% minimum threshold enforced in `jest.config.ts`. The Jenkins pipeline fails if coverage drops below this threshold.
 
-## Mono Repo
-With the mono repo that has a shared lib project in the middle of the FE and BE it makes it easier to detech error at development time for both sides of the application if there are changes in the DB or on the query. It is also shared in a way that only the BE can connect to the prisma client which connects to my DB and the FE only gets the generated query models to use.
+---
 
-The shared lib is also responsible for anything that is needed to share between the two apps. Like zod schemas that can be used for FE or BE validation, constants or helpers.
+## 🧩 Prisma & PostgreSQL
 
-## Jenkins opensource CI/CD
-The mono repo is equipped with a pre-configured Jenkins docker setup. When you run the command <code>npm run docker:jenkins:start</code> it will spin up jenkins with a preconfigured job and pipeline that exists on the git repo under docker/jenkins/config here are two files /init.groovy.d/create-job.groovy which is the initial job and Jenkinsfile which is the pipeline configuration. This means that you can easily change the pipeline for CI/CD within the git repo. 
+DB models are located in: `apps/backend/integrations/prisma/models`
 
-The Jenkinsfile is already preconfigured to get latest change -> npm i -> DB setup (applies prisma structure and clears the test DB) -> Lint all apps -> Build all apps -> Test all apps -> Deploy apps(on this step it will apply prisma structure onto prod DB. Create a prod container for both FE and BE and run them on docker it also has a conditional step if you have <code>cloud-flare-tunnel-token</code> setup on the Jenkins credential vault it will then additionally spin up a cloud-flare-tunnel service and expose and host the FE from your docker network to a configured domain that you setup on cloudflare)
+Key commands:
 
-# How to run
-## !!!Make sure you use the .env.sample and fill out all the enviromental variable required!!!
+- `npm run prisma:migrate` – Generate and apply DB schema + types
+- `npm run prisma:deploy` – Apply existing migrations (no new generation)
+- `npm run prisma:reset` – Reset the DB and apply migrations from scratch
 
+The stack includes **Adminer** for browsing the database (included in `docker-compose.yml`).
 
+---
+
+## 🔧 Backend – Express.js
+
+The backend is built with **Express.js** and structured with clear, modular directory scaffolding. Each integration (e.g., Express, Prisma, Swagger) is placed under the `integrations/` folder with its respective subfolder, such as `integrations/express`, making it easy to locate and manage implementation-specific code.
+
+### 🔌 Integrations
+
+- **Ergast API**: For querying F1 data.
+- **Express**: Provides the core API setup and routing (GET, POST, DELETE).
+- **Prisma**: Handles ORM with `.prisma` models. Migrations are applied using `prisma migrate`, and the DB connection is initialized on app startup with automatic retries every 3 seconds. Includes a utility `safeUpsertOrFindUnique` to handle race conditions in concurrent DB access—essential for distributed systems.
+- **Swagger**: Generates OpenAPI documentation from `@swagger` comments inside `integrations/express/routers`.
+- **Winston**: Advanced error logging to console, file, and DB through an Express middleware.
+
+### 🧠 Services Layer
+
+Business logic resides in the `services/` directory. Each service is class-based for easy mocking in unit tests and includes:
+
+- A primary `*.service.ts` file as the main access point.
+- A corresponding `*.utils.ts` file to break out utility functions, improving readability and testability.
+
+There is no separate data access layer because Prisma covers that functionality.
+
+### 🏁 Ergast Integration Logic
+
+The following service functions handle integration with the Ergast API:
+
+#### `getChampionBySeasons(startYear, endYear?)`
+
+- Checks for existing champion data in the DB.
+- If any season is missing, it fetches champion data using:
+
+  ```
+  {ergastRootApi}/driverStandings/1.json?limit={limit}&offset={offset}
+  ```
+
+- Stores the champion driver and constructor in the DB but skips race data to optimize initial performance.
+
+#### `getRaceWinnersBySeason(seasonYear)`
+
+- Checks if race data for the given season exists in the DB.
+- If missing, fetches both:
+
+  ```
+  {ergastRootApi}/driverStandings/1.json?limit={limit}&offset={offset}
+  {ergastRootApi}/{year}/results/1.json
+  ```
+
+- Uses this data to upsert into the DB.
+
+Both functions use a locking utility:
+
+```ts
+getOrLockAndExecute(key, fn)
+```
+
+This ensures that concurrent calls to the same resource don’t cause conflicting writes. The first call executes while others wait and reuse the result. This is crucial for horizontally scaling in distributed environments.
+
+### 🧰 Utility Wrappers
+
+- **`safeUpsertOrFindUnique`**: A Prisma wrapper used in non-synchronous execution contexts. If a race condition occurs during upsert, it gracefully falls back to a DB query.
+
+### 📄 Application Structure
+
+- **`main.ts`**: The backend’s entry point. It sets up the server and initializes integrations. The structure is straightforward and self-explanatory.
+
+### 🚫 Low Boilerplate
+
+The backend avoids unnecessary boilerplate such as DTO-to-viewmodel mapping. Instead, the shared library defines query types that infer the response model. These inferred models are reused across both backend and frontend. This approach:
+
+- Reduces redundant mapping logic.
+- Ensures type safety across BE/FE.
+- Catches breaking changes at build time when a query changes.
+
+### 📦 OpenAPI Integration
+
+If third parties consume your API, they can use the generated OpenAPI spec at:
+
+```
+/swagger.json
+```
+
+This can be used with tools like [`@openapitools/openapi-generator-cli`](https://www.npmjs.com/package/@openapitools/openapi-generator-cli) to auto-generate client SDKs or frontend integrations.
+
+### ✅ Testing
+
+- **Jest** is used for unit and integration testing.
+- A Dockerized test DB is utilized for running tests.
+- Connection string can be configured in `.env.test`.
+- CI/CD (via Jenkins) automatically provisions a test DB and resets it after each run.
+
+---
+
+## 🖼️ Frontend – Next.js
+
+The frontend is built using **Next.js** to leverage its full-stack capabilities and modern React features. Specifically, I’m utilizing **Incremental Static Regeneration (ISR)**, which offers a blend of static and dynamic rendering for optimal performance and flexibility.
+
+### Why ISR?
+
+Only the frontend is exposed to users — the backend and database are hosted on a private Docker network and are not directly accessible by the production frontend build. Because of this setup, traditional Static Site Generation (SSG) is not feasible at build time.
+
+With ISR:
+- Pages are rendered on-demand the first time they are accessed.
+- Once rendered, they are cached and served statically to subsequent users.
+- This results in fast load times and efficient performance while still allowing fresh data.
+
+This hybrid approach provides the best of both worlds:
+- **Speed**, since cached pages are served like traditional static content.
+- **Flexibility**, as pages can be updated or added without rebuilding the entire site.
+
+Caching behavior can be finely tuned to your application's needs, giving you complete control over how and when pages are regenerated.
+
+---
+
+## 📦 Monorepo Architecture
+A shared library connects FE and BE:
+
+- Shared Types & Queries:
+  - Ensure type-safety between services
+  - Breaks the build if data contracts mismatch
+- Reduces duplication and allows early error detection in development
+
+---
+
+## 🧪 Jenkins – Open Source CI/CD
+
+The monorepo comes with a pre-configured **Jenkins Docker setup** for seamless continuous integration and deployment.
+
+### Getting Started
+
+To start Jenkins locally, simply run:
+
+```bash
+npm run docker:jenkins:start
+```
+
+This command spins up Jenkins with a predefined job and pipeline configuration. These configurations live within the repository under:
+
+```
+docker/jenkins/config/
+├── init.groovy.d/create-job.groovy  # Script to create the initial Jenkins job
+├── Jenkinsfile                      # CI/CD pipeline definition
+```
+
+This setup allows for complete control over the CI/CD pipeline directly from your Git repository. You can easily customize or extend the pipeline logic as needed.
+
+### Jenkins Pipeline Overview
+
+The provided `Jenkinsfile` includes the following steps:
+
+1. **Pull Latest Changes**
+2. **Install Dependencies**
+    - Runs `npm install`
+3. **Database Setup**
+    - Applies Prisma schema
+    - Clears the test database
+4. **Linting**
+    - Lints all apps in the monorepo
+5. **Building**
+    - Builds all frontend and backend apps
+6. **Testing**
+    - Executes all unit and integration tests
+7. **Deployment**
+    - Applies the Prisma schema to the production database
+    - Creates production containers for both frontend and backend apps
+    - Runs the containers using Docker
+
+### Optional Cloudflare Tunnel Integration
+
+If you add the `cloud-flare-tunnel-token` to your Jenkins credentials vault, the pipeline will:
+
+- Automatically spin up a **Cloudflare Tunnel** service
+- Expose and host your frontend app from the Docker network to a custom domain configured in your Cloudflare account
+
+This makes it easy to deploy and expose your applications securely, even from local or private environments.
+
+---
+
+# 🚀 How to run
+## Apps
+Be sure to setup the `.env` file, this is usually .gitignored but for the assessment it is included in the repo
+```sh
+docker compose up
+```
+This will spin up postgresql and prod version of BE and FE on docker container
+```sh
+npx nx run backend:serve
+```
+This runs the BE locally
+```sh
+npx nx run frontend:dev
+```
+This runs the FE locally
 ## Jenkins CI/CD setup
 ```sh
 npm run docker:jenkins:start
 ```
-after this command jenkins, test-db, prod-db and adminer container wil spin up
+after this command jenkins, test-db, prod-db and adminer containers wil spin up
 * adminer is for connecting to the DB directly [http:localhost:8085](http:localhost:8085)
 * jenkins UI [http:localhost:8080](http:localhost:8080)
 
 You navigate to the jenkins UI and follow the onscreen setup which will ask for a administrator account token which will be in the logs of the jenkins docker container which you can just copy and past in. After that it allows you to create a jenkins admin user to login after that click on the option to install recommended plugins and then it will install and finalize jenkins. Then you will be navigated to the dashboard where you will find the preconfigured CI/CD for this mono repo.
+
+For the other commands app related you can have a look at package.json the naming convension and actual command is straight forward
+
+---
+
+## 📌 Final Notes
+This project was built with performance, type-safety, self-hostability, and developer experience in mind. While some trade-offs exist due to Docker and time constraints, the core system is robust, scalable, and production-ready with minimal cloud dependencies.

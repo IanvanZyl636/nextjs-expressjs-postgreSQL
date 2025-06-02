@@ -106,4 +106,3 @@ volumes:
   postgresql_data:
   postgresql_test_data:
   jenkins_data:
-  registry_data:
