@@ -90,6 +90,7 @@ pipeline {
             env.CLOUD_FLARE_TUNNEL_TOKEN = env.CF_TOKEN
             sh 'npm run docker:cloudflare:start'
           }
+          }
         }
       }
     }
