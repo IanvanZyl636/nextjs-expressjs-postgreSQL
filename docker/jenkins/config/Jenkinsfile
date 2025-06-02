@@ -61,7 +61,6 @@ pipeline {
       environment {
         DATABASE_URL = "${DB_CONN_STRING}"
         BACKEND_DOMAIN= 'http://backend:3333'
-        CLOUD_FLARE_TUNNEL_TOKEN = credentials('cloud-flare-tunnel-token')
       }
       steps {
         script {
@@ -74,10 +73,22 @@ pipeline {
           sh 'npm run docker:frontend:start'
         }
         script {
-          if (env.CLOUD_FLARE_TUNNEL_TOKEN?.trim()) {
+          // Attempt to use the Cloudflare token only if it exists
+          def cloudflareTokenId = 'cloud-flare-tunnel-token'
+          def credsAvailable = false
+
+          try {
+            withCredentials([string(credentialsId: cloudflareTokenId, variable: 'CF_TOKEN')]) {
+              credsAvailable = true
+            }
+          } catch (Exception e) {
+            echo "No Cloudflare Tunnel token found: skipping tunnel start."
+          }
+
+          if (credsAvailable) {
+            withCredentials([string(credentialsId: cloudflareTokenId, variable: 'CF_TOKEN')]) {
+            env.CLOUD_FLARE_TUNNEL_TOKEN = env.CF_TOKEN
             sh 'npm run docker:cloudflare:start'
-          } else {
-            echo 'Skipping Cloudflare tunnel start: no token provided.'
           }
         }
       }
