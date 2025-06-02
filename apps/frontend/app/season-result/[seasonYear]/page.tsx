@@ -47,6 +47,7 @@ export default async function SeasonResult({
               {season.races.map((race, index) => (
                 <tr
                   key={`race-${index}`}
+                  data-testid="race-row"
                   className={cn(
                     'border-b border-secondary',
                     season.champion.driverId === race.winner.driverId

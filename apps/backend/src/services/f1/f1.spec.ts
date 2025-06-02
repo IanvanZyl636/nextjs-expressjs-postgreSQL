@@ -63,7 +63,7 @@ describe('getChampionBySeasons', () => {
     } catch (e) {
       console.error(e);
     }
-  }, 99999);
+  });
 });
 
 describe('getRaceWinnersBySeason', () => {
@@ -1106,7 +1106,7 @@ describe('getRaceWinnersBySeason', () => {
     } catch (e) {
       console.error(e);
     }
-  }, 99999);
+  });
 });
 
 afterAll(async () => {
