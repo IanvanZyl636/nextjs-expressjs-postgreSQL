@@ -5,13 +5,12 @@
   "scripts": {
     "build": "npx nx run-many --target=build --no-cloud",
     "test": "npx nx run-many --target=test --coverage --passWithNoTests --no-cloud --skip-nx-cache",
-    "e2e": "npx nx run-many --target=e2e --no-cloud --skip-nx-cache",
+    "e2e": "npx nx run-many --target=e2e --no-cloud",
     "lint": "npx nx run-many --target=lint --no-cloud",
     "start:frontend": "cd ./apps/frontend && next start",
     "start:backend": "node apps/backend/dist/main.js",
     "local:test": "npm run prisma:reset:force:test && npm run test",
     "local:prod:start": "dotenv -e .env -- node apps/backend/dist/main.js",
-    "docker:start": "docker compose --profile jenkins --profile postgresql up -d --no-deps --build",
     "docker:frontend:start": "docker compose --profile frontend up -d --no-deps --build",
     "docker:backend:start": "docker compose --profile backend up -d --no-deps --build",
     "docker:jenkins:start": "docker-compose --profile jenkins up -d --no-deps --build",
@@ -20,6 +19,7 @@
     "prisma:migrate": "npx prisma migrate dev --schema=apps/backend/src/integrations/prisma",
     "prisma:reset": "npx prisma migrate reset --schema=apps/backend/src/integrations/prisma",
     "prisma:reset:force": "npx prisma migrate reset --force --schema=apps/backend/src/integrations/prisma",
+    "prisma:reset:test": "dotenv -e .env.test -- npx prisma migrate reset --schema=apps/backend/src/integrations/prisma",
     "prisma:reset:force:test": "dotenv -e .env.test -- npx prisma migrate reset --force --schema=apps/backend/src/integrations/prisma",
     "prisma:deploy": "npx prisma migrate deploy --schema=apps/backend/src/integrations/prisma",
     "prisma:seed": "npx prisma db seed --schema=apps/backend/src/integrations/prisma"

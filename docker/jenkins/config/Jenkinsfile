@@ -73,10 +73,12 @@ pipeline {
         script {
           sh 'npm run docker:frontend:start'
         }
-        if (env.CLOUD_FLARE_TUNNEL_TOKEN?.trim()) {
+        script {
+          if (env.CLOUD_FLARE_TUNNEL_TOKEN?.trim()) {
             sh 'npm run docker:cloudflare:start'
-        } else {
+          } else {
             echo 'Skipping Cloudflare tunnel start: no token provided.'
+          }
         }
       }
     }
