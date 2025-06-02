@@ -73,7 +73,6 @@ pipeline {
           sh 'npm run docker:frontend:start'
         }
         script {
-          // Attempt to use the Cloudflare token only if it exists
           def cloudflareTokenId = 'cloud-flare-tunnel-token'
           def credsAvailable = false
 
@@ -87,9 +86,9 @@ pipeline {
 
           if (credsAvailable) {
             withCredentials([string(credentialsId: cloudflareTokenId, variable: 'CF_TOKEN')]) {
-            env.CLOUD_FLARE_TUNNEL_TOKEN = env.CF_TOKEN
-            sh 'npm run docker:cloudflare:start'
-          }
+              env.CLOUD_FLARE_TUNNEL_TOKEN = env.CF_TOKEN
+              sh 'npm run docker:cloudflare:start'
+            }
           }
         }
       }

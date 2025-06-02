@@ -89,7 +89,7 @@ services:
     environment:
       BACKEND_DOMAIN: ${BACKEND_DOMAIN}
     ports:
-      - "3000:3000"
+      - "3444:3000"
 
   cloudflare:
     container_name: f1-cloudflare
