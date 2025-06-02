@@ -1,0 +1,1 @@
+export const backendDomain = `${process.env.BACKEND_DOMAIN ?? 'http://localhost:3333'}`;

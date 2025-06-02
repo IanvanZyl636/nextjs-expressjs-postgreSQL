@@ -9,7 +9,8 @@ export const initializeDB = async (): Promise<void> => {
 
       console.log('✅  Connected to the database.');
       break;
-    } catch {
+    } catch (e) {
+      console.error(e);
       console.error('❌  DB connection failed. Retrying in 3 seconds...');
       await new Promise(res => setTimeout(res, 3000));
     }

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { SeasonWithRacesEntity } from '@nextjs-expressjs-postgre-sql/shared';
 import { H1 } from '@/app/ui/typography/h1';
 import { cn } from '@/app/utils/cn';
+import { backendDomain } from '@/app/constants/backend-domain';
 
 export default async function SeasonResult({
   params,
@@ -12,7 +13,7 @@ export default async function SeasonResult({
 
   const season: SeasonWithRacesEntity = await (
     await fetch(
-      `${process.env.BACKEND_DOMAIN ?? 'localhost:3333'}/api/season/race-winners?seasonYear=${seasonYear}`,
+      `${backendDomain}/api/season/race-winners?seasonYear=${seasonYear}`,
       {
         cache: 'force-cache',
       }

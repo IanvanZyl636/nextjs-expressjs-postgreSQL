@@ -1,10 +1,11 @@
 import { SeasonWithChampionAndConstructorEntity } from '@nextjs-expressjs-postgre-sql/shared';
 import { H1 } from '@/app/ui/typography/h1';
 import Link from 'next/link';
+import { backendDomain } from '@/app/constants/backend-domain';
 
 export default async function Index() {
   const seasons: SeasonWithChampionAndConstructorEntity[] = await (
-    await fetch(`${process.env.BACKEND_DOMAIN ?? 'localhost:3333'}/api/seasons/champions?startYear=2005`, {
+    await fetch(`${backendDomain}/api/seasons/champions?startYear=2005`, {
       cache: 'force-cache',
     })
   )?.json();
