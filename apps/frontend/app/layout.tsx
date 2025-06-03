@@ -22,7 +22,7 @@ export default function RootLayout({
           {children}
         </main>
         <footer className={'text-center p-4 bg-content-foreground text-content text-lg font-bold'}>
-          Create by Ian van Zyl
+          Created by Ian van Zyl
         </footer>
       </body>
     </html>
